@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Flight Orbit Path -->
+  <path d="M18 42C18 26 34 16 54 16C68 16 80 22 84 32" stroke="#94a3b8" stroke-width="2" stroke-dasharray="3 3" stroke-linecap="round"/>
+
+  <!-- Globe Ocean -->
+  <circle cx="50" cy="56" r="26" fill="#38bdf8" stroke="#1e293b" stroke-width="2.8"/>
+
+  <!-- Continents/Landmass (Coral Red as in ref image) -->
+  <path d="M42 32C46 34 45 40 40 42C36 44 32 40 34 36C36 32 40 31 42 32Z" fill="#f87171" stroke="#1e293b" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M56 36C62 38 64 46 60 50C56 52 50 48 52 42C53 38 54 36 56 36Z" fill="#f87171" stroke="#1e293b" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M36 54C42 56 46 64 42 70C38 74 30 72 30 64C30 58 32 54 36 54Z" fill="#f87171" stroke="#1e293b" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M58 60C64 62 68 70 64 76C60 78 54 74 56 66C56 62 57 60 58 60Z" fill="#f87171" stroke="#1e293b" stroke-width="1.8" stroke-linejoin="round"/>
+
+  <!-- Airplane Flying Over Top -->
+  <g transform="translate(42, 14) rotate(15)">
+    <!-- Fuselage -->
+    <path d="M0 10L22 4C26 3 28 5 26 7L6 14L0 10Z" fill="#ffffff" stroke="#1e293b" stroke-width="2.2" stroke-linejoin="round"/>
+    <!-- Main Wings -->
+    <path d="M10 6L14 -4L18 -3L14 8" fill="#ffffff" stroke="#1e293b" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M8 12L12 20L15 19L11 13" fill="#ffffff" stroke="#1e293b" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Tail Fin -->
+    <path d="M2 9L-4 3L-2 2L4 9" fill="#ef4444" stroke="#1e293b" stroke-width="1.8" stroke-linejoin="round"/>
+  </g>
+</svg>

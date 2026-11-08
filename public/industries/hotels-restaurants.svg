@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- 4 Golden Rating Stars Above Roof -->
+  <g fill="#fbbf24" stroke="#1e293b" stroke-width="1.4">
+    <!-- Star 1 -->
+    <polygon points="35,16 37,21 42,21 38,24 39,29 35,26 31,29 32,24 28,21 33,21"/>
+    <!-- Star 2 -->
+    <polygon points="45,14 47,19 52,19 48,22 49,27 45,24 41,27 42,22 38,19 43,19"/>
+    <!-- Star 3 -->
+    <polygon points="55,14 57,19 62,19 58,22 59,27 55,24 51,27 52,22 48,19 53,19"/>
+    <!-- Star 4 -->
+    <polygon points="65,16 67,21 72,21 68,24 69,29 65,26 61,29 62,24 58,21 63,21"/>
+  </g>
+
+  <!-- Hotel Building Body -->
+  <rect x="28" y="32" width="44" height="46" rx="2" fill="#e0f2fe" stroke="#1e293b" stroke-width="2.8"/>
+
+  <!-- Hotel Roof Crown / Cornice -->
+  <path d="M26 32H74V28H26V32Z" fill="#38bdf8" stroke="#1e293b" stroke-width="2.6"/>
+
+  <!-- Grid of Windows -->
+  <g fill="#0284c7" stroke="#1e293b" stroke-width="1.8">
+    <rect x="34" y="38" width="6" height="6" rx="1"/>
+    <rect x="47" y="38" width="6" height="6" rx="1"/>
+    <rect x="60" y="38" width="6" height="6" rx="1"/>
+
+    <rect x="34" y="48" width="6" height="6" rx="1"/>
+    <rect x="47" y="48" width="6" height="6" rx="1"/>
+    <rect x="60" y="48" width="6" height="6" rx="1"/>
+
+    <rect x="34" y="58" width="6" height="6" rx="1"/>
+    <rect x="47" y="58" width="6" height="6" rx="1"/>
+    <rect x="60" y="58" width="6" height="6" rx="1"/>
+  </g>
+
+  <!-- Hotel Entrance Canopy & Revolving Door -->
+  <path d="M42 78V68H58V78" fill="#0f172a" stroke="#1e293b" stroke-width="2.2"/>
+  <path d="M38 68H62" stroke="#ef4444" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Ground Foundation Line -->
+  <line x1="20" y1="78" x2="80" y2="78" stroke="#1e293b" stroke-width="2.8" stroke-linecap="round"/>
+</svg>

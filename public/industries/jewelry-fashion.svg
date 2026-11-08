@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Boutique Scalloped Awning Top -->
+  <path d="M22 22H78V28C78 32 74 34 71 31C68 34 64 34 61 31C58 34 54 34 50 31C46 34 42 34 39 31C36 34 32 34 29 31C26 34 22 32 22 28V22Z" fill="#ef4444" stroke="#1e293b" stroke-width="2.6" stroke-linejoin="round"/>
+  
+  <!-- Showcase Framing Pillars -->
+  <rect x="22" y="32" width="56" height="46" rx="2" fill="#f8fafc" stroke="#1e293b" stroke-width="2.6"/>
+
+  <!-- Jewelry Mannequin Display Bust -->
+  <path d="M42 42C42 38 46 36 50 36C54 36 58 38 58 42V45C64 48 68 54 68 64H32C32 54 36 48 42 45V42Z" fill="#0f172a" stroke="#1e293b" stroke-width="2.5" stroke-linejoin="round"/>
+
+  <!-- Gleaming Golden Necklace -->
+  <path d="M42 45C42 54 50 58 50 58C50 58 58 54 58 45" stroke="#fbbf24" stroke-width="3" stroke-linecap="round" fill="none"/>
+  
+  <!-- Diamond / Gemstone Pendant -->
+  <polygon points="50,58 54,62 50,66 46,62" fill="#38bdf8" stroke="#1e293b" stroke-width="1.8"/>
+
+  <!-- Showcase Pedestal Base -->
+  <rect x="18" y="78" width="64" height="6" rx="1.5" fill="#e2e8f0" stroke="#1e293b" stroke-width="2.6"/>
+</svg>

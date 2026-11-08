@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Steam Trails -->
+  <path d="M42 32C40 28 44 24 42 20C40 16 44 12 42 8" stroke="#1e293b" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M50 30C48 26 52 22 50 18C48 14 52 10 50 6" stroke="#1e293b" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M58 32C56 28 60 24 58 20C56 16 60 12 58 8" stroke="#1e293b" stroke-width="2.6" stroke-linecap="round"/>
+
+  <!-- Steaming Rice / Food Heap -->
+  <ellipse cx="50" cy="50" rx="26" ry="14" fill="#f8fafc" stroke="#1e293b" stroke-width="2.6"/>
+  <path d="M28 50C28 40 38 34 50 34C62 34 72 40 72 50" fill="#fef08a" stroke="#1e293b" stroke-width="2.6"/>
+  <!-- Food dots/textures -->
+  <circle cx="44" cy="42" r="1.5" fill="#f59e0b"/>
+  <circle cx="52" cy="40" r="1.5" fill="#f59e0b"/>
+  <circle cx="58" cy="44" r="1.5" fill="#f59e0b"/>
+  <circle cx="48" cy="46" r="1.5" fill="#f59e0b"/>
+
+  <!-- Bowl Shape -->
+  <path d="M22 50C22 72 34 78 50 78C66 78 78 72 78 50H22Z" fill="#fed7aa" stroke="#1e293b" stroke-width="2.8" stroke-linejoin="round"/>
+  <!-- Decorative Rim Band on Bowl -->
+  <path d="M22 50H78V55H22V50Z" fill="#f97316" stroke="#1e293b" stroke-width="2.4"/>
+  <!-- Bowl Base / Foot -->
+  <path d="M38 78L36 84H64L62 78" fill="#cbd5e1" stroke="#1e293b" stroke-width="2.6" stroke-linejoin="round"/>
+</svg>

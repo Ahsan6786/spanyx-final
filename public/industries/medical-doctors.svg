@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Heart Base Shape -->
+  <path d="M50 82C50 82 20 62 20 40C20 28 29 20 40 20C46 20 50 24 50 24C50 24 54 20 60 20C71 20 80 28 80 40C80 62 50 82 50 82Z" fill="#ef4444" stroke="#1e293b" stroke-width="2.8" stroke-linejoin="round"/>
+  
+  <!-- Subtle Split Shading on Heart -->
+  <path d="M50 24C54 20 60 20 71 20C80 28 80 40 80 40C80 62 50 82 50 82V24Z" fill="#dc2626" opacity="0.25"/>
+
+  <!-- White ECG / Heartbeat Line Across Heart -->
+  <path d="M16 48H36L42 34L48 60L54 42L58 52L62 48H84" stroke="#ffffff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16 48H36L42 34L48 60L54 42L58 52L62 48H84" stroke="#1e293b" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- Small Stethoscope / Plus Indicator Accent -->
+  <circle cx="76" cy="24" r="5" fill="#38bdf8" stroke="#1e293b" stroke-width="2"/>
+  <path d="M74 24H78M76 22V26" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- House Roof -->
+  <path d="M50 18L24 38H76L50 18Z" fill="#ef4444" stroke="#1e293b" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M64 24V18H72V30" fill="#ef4444" stroke="#1e293b" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- House Body -->
+  <rect x="30" y="38" width="40" height="26" fill="#e0f2fe" stroke="#1e293b" stroke-width="2.6" stroke-linejoin="round"/>
+  <!-- Door -->
+  <path d="M44 64V49C44 46.8 45.8 45 48 45H52C54.2 45 56 46.8 56 49V64" fill="#0f172a" stroke="#1e293b" stroke-width="2.4"/>
+  <!-- Window -->
+  <rect x="34" y="44" width="7" height="7" rx="1" fill="#38bdf8" stroke="#1e293b" stroke-width="1.8"/>
+  <rect x="59" y="44" width="7" height="7" rx="1" fill="#38bdf8" stroke="#1e293b" stroke-width="1.8"/>
+  <!-- Supporting Hand -->
+  <path d="M16 68C22 68 28 66 34 68L48 70C58 71.5 68 70 78 63C82 60 85 64 81 68C74 74 65 77 56 77H38C30 77 24 75 16 73V68Z" fill="#fed7aa" stroke="#1e293b" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M16 68H26C28 68 30 70 30 72V75" stroke="#1e293b" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M78 63C80 61 84 61 86 64C87 67 84 70 81 72" stroke="#1e293b" stroke-width="2.6" stroke-linecap="round"/>
+</svg>

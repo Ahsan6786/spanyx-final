@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Heraldic Shield Outline & Body -->
+  <path d="M50 18C68 18 78 24 78 36C78 60 50 82 50 82C50 82 22 60 22 36C22 24 32 18 50 18Z" fill="#bae6fd" stroke="#1e293b" stroke-width="3.2" stroke-linejoin="round"/>
+  
+  <!-- Inner Shield Inset Line -->
+  <path d="M50 24C64 24 71 28 71 38C71 56 50 74 50 74C50 74 29 56 29 38C29 28 36 24 50 24Z" fill="#e0f2fe" stroke="#38bdf8" stroke-width="2"/>
+
+  <!-- Red Medical Plus Cross in Center -->
+  <path d="M44 34H56V44H66V56H56V66H44V56H34V44H44V34Z" fill="#ef4444" stroke="#1e293b" stroke-width="2.6" stroke-linejoin="round"/>
+
+  <!-- Gentle Wellness / Leaf Accent at Upper Right -->
+  <path d="M74 22C80 22 84 28 84 34C78 34 74 30 74 22Z" fill="#34d399" stroke="#1e293b" stroke-width="2" stroke-linejoin="round"/>
+</svg>

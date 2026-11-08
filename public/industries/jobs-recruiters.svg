@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Ascending Growth Arrow -->
+  <path d="M22 78L48 56L60 64L82 32" stroke="#ef4444" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M68 30H84V46" stroke="#ef4444" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Shadow/Secondary Arrow Stroke for Illustrated Depth -->
+  <path d="M22 83L48 61L60 69L76 45" stroke="#fca5a5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Climbing Professional -->
+  <!-- Head -->
+  <circle cx="56" cy="22" r="6" fill="#fed7aa" stroke="#1e293b" stroke-width="2.5"/>
+  <!-- Torso / Jacket -->
+  <path d="M52 28L46 44L54 46L60 30L52 28Z" fill="#38bdf8" stroke="#1e293b" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Forward Leg -->
+  <path d="M54 46L66 54L72 52" stroke="#1e293b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Back Leg -->
+  <path d="M46 44L40 56L34 58" stroke="#1e293b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Right Arm reaching forward -->
+  <path d="M58 32L68 28L72 32" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Left Arm holding Briefcase -->
+  <path d="M48 34L38 42" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Briefcase -->
+  <rect x="28" y="42" width="16" height="12" rx="2" fill="#d97706" stroke="#1e293b" stroke-width="2.4" transform="rotate(-15 36 48)"/>
+  <path d="M34 40C34 38.5 35.5 37 37 37C38.5 37 40 38.5 40 40" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+</svg>

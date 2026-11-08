@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Top Arm (Coral/Pink) holding Right Arm -->
+  <path d="M42 28H64C66 28 68 30 68 32V38C68 40 66 42 64 42H58V36H42V28Z" fill="#fb7185" stroke="#1e293b" stroke-width="2.6" stroke-linejoin="round"/>
+  <!-- Top Hand Fingers -->
+  <path d="M68 32H72M68 35H72M68 38H72" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Right Arm (Yellow/Gold) holding Bottom Arm -->
+  <path d="M72 42V64C72 66 70 68 68 68H62C60 68 58 66 58 64V58H64V42H72Z" fill="#fde047" stroke="#1e293b" stroke-width="2.6" stroke-linejoin="round"/>
+  <!-- Right Hand Fingers -->
+  <path d="M68 68V72M65 68V72M62 68V72" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Bottom Arm (Mint Green) holding Left Arm -->
+  <path d="M58 72H36C34 72 32 70 32 68V62C32 60 34 58 36 58H42V64H58V72Z" fill="#34d399" stroke="#1e293b" stroke-width="2.6" stroke-linejoin="round"/>
+  <!-- Bottom Hand Fingers -->
+  <path d="M32 68H28M32 65H28M32 62H28" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Left Arm (Sky Blue) holding Top Arm -->
+  <path d="M28 58V36C28 34 30 32 32 32H38C40 32 42 34 42 36V42H36V58H28Z" fill="#38bdf8" stroke="#1e293b" stroke-width="2.6" stroke-linejoin="round"/>
+  <!-- Left Hand Fingers -->
+  <path d="M32 32V28M35 32V28M38 32V28" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+</svg>

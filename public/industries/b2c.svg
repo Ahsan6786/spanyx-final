@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Business / Storefront on Left -->
+  <path d="M18 36L44 36L42 44L16 44L18 36Z" fill="#ef4444" stroke="#1e293b" stroke-width="2.5" stroke-linejoin="round"/>
+  <rect x="20" y="44" width="22" height="28" fill="#e0f2fe" stroke="#1e293b" stroke-width="2.5" stroke-linejoin="round"/>
+  <rect x="25" y="52" width="12" height="20" fill="#0f172a" stroke="#1e293b" stroke-width="2"/>
+  
+  <!-- Direct Connection / Exchange Arrow -->
+  <path d="M44 54H58" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+  <path d="M54 50L58 54L54 58" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Consumer / Shopper on Right -->
+  <!-- Head -->
+  <circle cx="72" cy="36" r="9" fill="#fed7aa" stroke="#1e293b" stroke-width="2.5"/>
+  <!-- Torso -->
+  <path d="M60 68C60 56 65 50 72 50C79 50 84 56 84 68H60Z" fill="#38bdf8" stroke="#1e293b" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Shopping Bag held by consumer -->
+  <rect x="76" y="58" width="12" height="15" rx="2" fill="#fbbf24" stroke="#1e293b" stroke-width="2.2"/>
+  <path d="M79 58V54C79 52 80 50 82 50C84 50 85 52 85 54V58" stroke="#1e293b" stroke-width="2" fill="none"/>
+</svg>

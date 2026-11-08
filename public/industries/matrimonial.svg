@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Diamond Gem Left -->
+  <path d="M37 28L43 20L49 28L43 32L37 28Z" fill="#7dd3fc" stroke="#1e293b" stroke-width="2.2" stroke-linejoin="round"/>
+  <line x1="43" y1="20" x2="43" y2="32" stroke="#1e293b" stroke-width="1.8"/>
+
+  <!-- Diamond Gem Right -->
+  <path d="M63 32L69 24L75 32L69 36L63 32Z" fill="#7dd3fc" stroke="#1e293b" stroke-width="2.2" stroke-linejoin="round"/>
+  <line x1="69" y1="24" x2="69" y2="36" stroke="#1e293b" stroke-width="1.8"/>
+
+  <!-- Left Ring -->
+  <circle cx="44" cy="56" r="21" fill="#fef08a" stroke="#1e293b" stroke-width="3"/>
+  <circle cx="44" cy="56" r="13" fill="#ffffff" stroke="#1e293b" stroke-width="2.5"/>
+
+  <!-- Right Ring (Intertwined) -->
+  <path d="M58 41C61 44 63 48 63 53C63 58 61 62 58 65" stroke="#1e293b" stroke-width="2.5" fill="none"/>
+  <circle cx="64" cy="56" r="21" fill="#fef08a" stroke="#1e293b" stroke-width="3" style="mix-blend-mode: multiply;"/>
+  <circle cx="64" cy="56" r="13" fill="#ffffff" stroke="#1e293b" stroke-width="2.5"/>
+
+  <!-- Sparkle Stars -->
+  <path d="M26 26L28 22L30 26L34 28L30 30L28 34L26 30L22 28L26 26Z" fill="#fbbf24"/>
+  <path d="M78 18L79 15L80 18L83 19L80 20L79 23L78 20L75 19L78 18Z" fill="#fbbf24"/>
+</svg>

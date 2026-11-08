@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Top Left Briefcase -->
+  <g transform="translate(18, 20)">
+    <rect x="0" y="6" width="30" height="20" rx="3" fill="#38bdf8" stroke="#1e293b" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M0 13H30" stroke="#0284c7" stroke-width="2"/>
+    <rect x="13" y="11" width="4" height="4" rx="0.5" fill="#fcd34d" stroke="#1e293b" stroke-width="1.6"/>
+    <!-- Handle -->
+    <path d="M10 6V2C10 1 11 0 12 0H18C19 0 20 1 20 2V6" stroke="#1e293b" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+
+  <!-- Bottom Right Briefcase -->
+  <g transform="translate(52, 54)">
+    <rect x="0" y="6" width="30" height="20" rx="3" fill="#38bdf8" stroke="#1e293b" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M0 13H30" stroke="#0284c7" stroke-width="2"/>
+    <rect x="13" y="11" width="4" height="4" rx="0.5" fill="#fcd34d" stroke="#1e293b" stroke-width="1.6"/>
+    <!-- Handle -->
+    <path d="M10 6V2C10 1 11 0 12 0H18C19 0 20 1 20 2V6" stroke="#1e293b" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+
+  <!-- Exchange Arrows (Curved bidirectional linking arrows in coral/pink) -->
+  <!-- Upper arrow pointing right/down -->
+  <path d="M52 28C64 28 72 34 72 44" stroke="#f43f5e" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M68 40L72 45L77 41" stroke="#f43f5e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Lower arrow pointing left/up -->
+  <path d="M48 72C36 72 28 66 28 56" stroke="#f43f5e" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M32 60L28 55L23 59" stroke="#f43f5e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

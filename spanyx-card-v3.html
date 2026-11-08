@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spanyx | Making software better for everyone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#0000d6;
+    --blue-2:#0f22ee;
+    --blue-3:#2b5cff;
+    --sky:#6aa4d6;
+    --mint:#b4dccd;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{
+    min-height:100vh;display:grid;place-items:center;
+    padding:40px 16px;background:#fff;
+    font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* Dimensions measured from the live site: 997 x 530, 48px side padding, 40px radius */
+  .card{
+    position:relative;isolation:isolate;overflow:hidden;
+    width:min(997px,100%);
+    min-height:530px;
+    padding:60px 48px;
+    border-radius:40px;
+    color:#fff;
+    background:linear-gradient(135deg,var(--blue-2) 0%,var(--blue) 55%,#0a0ac8 100%);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.14) inset,
+      0 28px 56px -26px rgba(0,0,214,.55),
+      0 12px 26px -14px rgba(10,21,80,.35);
+  }
+
+  /* arcs, same shapes as the site's blue cards */
+  .arc{position:absolute;border-radius:50%;z-index:-3;pointer-events:none}
+  .arc-a{
+    width:96%;aspect-ratio:1;right:-30%;top:-40%;
+    background:linear-gradient(200deg,var(--blue-3) 0%,#1a3cf6 45%,rgba(0,0,214,0) 85%);
+  }
+  .arc-b{
+    width:58%;aspect-ratio:1;right:-12%;bottom:-62%;
+    background:linear-gradient(180deg,var(--blue-3) 0%,#1d44f8 60%,#1530f0 100%);
+    animation:breathe 14s ease-in-out infinite alternate;
+  }
+  @keyframes breathe{
+    from{transform:translate3d(0,0,0)}
+    to{transform:translate3d(-12px,-14px,0)}
+  }
+  .rim{
+    position:absolute;left:0;right:0;bottom:0;height:30%;z-index:-2;pointer-events:none;
+    background:radial-gradient(70% 120% at 50% 135%,rgba(180,220,205,.5) 0%,rgba(106,164,214,.42) 38%,transparent 72%);
+  }
+  .grain{
+    position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.14;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* content */
+  .top{
+    display:grid;grid-template-columns:.81fr 1fr;column-gap:48px;align-items:start;
+  }
+  h1{
+    font-size:40px;line-height:42px;font-weight:700;letter-spacing:-.045em;
+  }
+  .copy{display:grid;gap:16px}
+  .copy p{font-size:15px;line-height:23px;color:rgba(255,255,255,.86)}
+
+  .features{
+    margin-top:60px;padding-top:42px;
+    border-top:1px solid rgba(255,255,255,.28);
+    display:grid;grid-template-columns:214fr 235fr 235fr 214fr;
+  }
+  .feature{position:relative;padding:0 21px}
+  .feature:first-child{padding-left:0}
+  .feature:last-child{padding-right:0}
+  .feature + .feature::before{
+    content:"";position:absolute;left:0;top:9px;height:41px;width:1px;
+    background:rgba(255,255,255,.3);
+  }
+  h2{font-size:20px;line-height:24px;font-weight:700;letter-spacing:-.02em}
+  .feature p{margin-top:8px;font-size:13px;line-height:18.5px;color:rgba(255,255,255,.82)}
+
+  @media (max-width:900px){
+    .card{padding:40px 28px;border-radius:30px;min-height:0}
+    .top{grid-template-columns:1fr;row-gap:24px}
+    h1{font-size:34px;line-height:38px}
+    .features{margin-top:40px;padding-top:28px;grid-template-columns:1fr 1fr;row-gap:28px}
+    .feature,.feature:first-child,.feature:last-child{padding:0 16px}
+    .feature:nth-child(odd){padding-left:0}
+    .feature:nth-child(3)::before{display:none}
+  }
+  @media (max-width:520px){
+    .features{grid-template-columns:1fr;row-gap:0}
+    .feature,.feature:nth-child(odd){padding:18px 0}
+    .feature + .feature::before{display:none}
+    .feature + .feature{border-top:1px solid rgba(255,255,255,.24)}
+  }
+  @media (prefers-reduced-motion:reduce){ .arc-b{animation:none} }
+</style>
+</head>
+<body>
+  <section class="card" aria-labelledby="title">
+    <div class="arc arc-a" aria-hidden="true"></div>
+    <div class="arc arc-b" aria-hidden="true"></div>
+    <div class="rim" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <div class="top">
+      <h1 id="title">Making software better for everyone</h1>
+      <div class="copy">
+        <p>Spanyx is an independent technology company focused on creating dependable software and digital experiences. We work with educational institutions, organizations, and businesses to turn complex requirements into practical, well-engineered solutions.</p>
+        <p>From custom web applications and enterprise management systems to modern digital platforms, we combine thoughtful design, innovative thinking, and strong engineering to solve real-world challenges.</p>
+        <p>Our philosophy is simple: understand the problem, build the right solution, and create technology that delivers lasting value.</p>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature"><h2>Custom Built</h2><p>Solutions shaped around real needs</p></div>
+      <div class="feature"><h2>Full Stack</h2><p>From frontend to backend engineering</p></div>
+      <div class="feature"><h2>End-to-End</h2><p>Design, development &amp; deployment</p></div>
+      <div class="feature"><h2>Future Ready</h2><p>Built to scale and evolve</p></div>
+    </div>
+  </section>
+</body>
+</html>
