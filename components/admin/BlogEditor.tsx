@@ -542,6 +542,8 @@ export default function BlogEditor({ initialData, isEditing = false }: BlogEdito
                 <img
                   src={featuredImage}
                   alt="Featured preview"
+                  loading="lazy"
+                  decoding="async"
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
                 <button
@@ -737,6 +739,8 @@ export default function BlogEditor({ initialData, isEditing = false }: BlogEdito
                 <img
                   src={featuredImage}
                   alt=""
+                  loading="lazy"
+                  decoding="async"
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
               </div>

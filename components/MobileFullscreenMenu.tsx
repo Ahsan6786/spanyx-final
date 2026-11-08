@@ -119,13 +119,17 @@ export default function MobileFullscreenMenu({
         {/* Top Header Row: Spanyx Logo (No round border) + Close Button */}
         <div className="spx-mfm-header">
           <Link href="/" onClick={onClose} className="spx-mfm-logo-link" aria-label="Spanyx Home">
-            <img
-              src="/span/small-logo.png"
-              alt="Spanyx Logo"
-              className="spx-mfm-logo-img"
-              width={34}
-              height={34}
-            />
+            <picture>
+              <source srcSet="/span/small-logo.webp" type="image/webp" />
+              <img
+                src="/span/small-logo.png"
+                alt="Spanyx Logo"
+                className="spx-mfm-logo-img"
+                width={34}
+                height={34}
+                loading="eager"
+              />
+            </picture>
           </Link>
 
           <button

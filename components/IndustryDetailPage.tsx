@@ -8,6 +8,12 @@ import ContactOverlay, {
 } from '@/components/ContactOverlay';
 import Footer from '@/components/Footer';
 
+const OPTIMIZED_INDUSTRY_WEBP = new Set([
+  '/industries/jobs-recruiters.png',
+  '/industries/news-blogs-publications.png',
+  '/industries/real-estate.png',
+]);
+
 interface GrowthSolutionCard {
   title: string;
   items: string[];
@@ -225,12 +231,29 @@ export default function IndustryDetailPage({
               <div className="sdp-hero-visual">
                 <div className="sdp-visual-stage">
                   <div className="sdp-visual-frame">
-                    <img
-                      src={industry.image}
-                      alt={`${industry.name} — SPANYX Architecture`}
-                      className="sdp-visual-img"
-                      loading="eager"
-                    />
+                    {OPTIMIZED_INDUSTRY_WEBP.has(industry.image) ? (
+                      <picture>
+                        <source
+                          srcSet={industry.image.replace(/\.(png|jpe?g)$/i, '.webp')}
+                          type="image/webp"
+                        />
+                        <img
+                          src={industry.image}
+                          alt={`${industry.name} — SPANYX Architecture`}
+                          className="sdp-visual-img"
+                          loading="eager"
+                          decoding="async"
+                        />
+                      </picture>
+                    ) : (
+                      <img
+                        src={industry.image}
+                        alt={`${industry.name} — SPANYX Architecture`}
+                        className="sdp-visual-img"
+                        loading="eager"
+                        decoding="async"
+                      />
+                    )}
                   </div>
                 </div>
               </div>

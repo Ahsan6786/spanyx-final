@@ -51,11 +51,17 @@ export default function AdminLoginPage() {
       >
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
-            <img
-              src="/span/logo.png"
-              alt="Spanyx"
-              style={{ height: 32, width: 'auto', objectFit: 'contain', filter: 'brightness(0) invert(1)' }}
-            />
+            <picture>
+              <source srcSet="/span/logo.webp" type="image/webp" />
+              <img
+                src="/span/logo.png"
+                alt="Spanyx"
+                width={140}
+                height={46}
+                decoding="async"
+                style={{ height: 32, width: 'auto', objectFit: 'contain', filter: 'brightness(0) invert(1)' }}
+              />
+            </picture>
           </div>
           <h1 style={{ fontSize: 20, fontWeight: 700, color: '#ffffff', margin: '0 0 6px' }}>
             Administrator Sign In

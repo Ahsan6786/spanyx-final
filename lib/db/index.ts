@@ -12,15 +12,20 @@ if (!fs.existsSync(DATA_DIR)) {
 const DB_PATH = path.join(DATA_DIR, 'spanyx_intelligence.db');
 
 let _db: DatabaseSync | null = null;
+let _schemaInitialized = false;
 
 export function getDb(): DatabaseSync {
   if (!_db) {
     _db = new DatabaseSync(DB_PATH);
-    // Optimize performance and enforce integrity
+    // Set busy timeout FIRST to prevent "database is locked" errors during concurrent worker access
+    _db.exec('PRAGMA busy_timeout = 10000;');
     _db.exec('PRAGMA journal_mode = WAL;');
     _db.exec('PRAGMA foreign_keys = ON;');
     _db.exec('PRAGMA synchronous = NORMAL;');
-    initSchema(_db);
+    if (!_schemaInitialized) {
+      initSchema(_db);
+      _schemaInitialized = true;
+    }
   }
   return _db;
 }
@@ -118,6 +123,7 @@ function initSchema(db: DatabaseSync) {
     CREATE INDEX IF NOT EXISTS idx_sessions_session_id ON analytics_sessions(session_id);
     CREATE INDEX IF NOT EXISTS idx_sessions_visitor_id ON analytics_sessions(visitor_id);
     CREATE INDEX IF NOT EXISTS idx_sessions_started_at ON analytics_sessions(started_at);
+    CREATE INDEX IF NOT EXISTS idx_sessions_visitor_started ON analytics_sessions(visitor_id, started_at DESC);
   `);
 
   // 6. Analytics Pageviews
@@ -186,6 +192,9 @@ function initSchema(db: DatabaseSync) {
     );
     CREATE INDEX IF NOT EXISTS idx_consent_consent_id ON consent_records(consent_id);
     CREATE INDEX IF NOT EXISTS idx_consent_visitor_id ON consent_records(visitor_id);
+    CREATE INDEX IF NOT EXISTS idx_consent_created_at ON consent_records(created_at);
+    CREATE INDEX IF NOT EXISTS idx_consent_status ON consent_records(consent_status);
+    CREATE INDEX IF NOT EXISTS idx_consent_visitor_created ON consent_records(visitor_id, created_at DESC);
   `);
 
   // 9. Consent Audit Logs

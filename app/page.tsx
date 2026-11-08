@@ -4,6 +4,8 @@ import React, { useEffect, useRef } from 'react';
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import StackedShowcase from '@/components/StackedShowcase';
+import AboutPreview from '@/components/AboutPreview';
+import IndustriesPreview from '@/components/IndustriesPreview';
 import Footer from '@/components/Footer';
 import ContactOverlay, {
   ContactOverlayHandle,
@@ -13,6 +15,10 @@ export default function HomePage() {
   const contactOverlayRef = useRef<ContactOverlayHandle>(null);
 
   useEffect(() => {
+    // Add page-specific class for mobile landing page scrollbar / indicator styling
+    document.documentElement.classList.add('is-landing-page');
+    document.body.classList.add('is-landing-page');
+
     // Disable automatic browser scroll restoration on refresh
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
@@ -40,6 +46,8 @@ export default function HomePage() {
     window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
+      document.documentElement.classList.remove('is-landing-page');
+      document.body.classList.remove('is-landing-page');
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   }, []);
@@ -55,6 +63,8 @@ export default function HomePage() {
         <HeroSection onOpenContact={handleOpenContact} />
       </div>
       <StackedShowcase onOpenContact={handleOpenContact} />
+      <AboutPreview onOpenContact={handleOpenContact} />
+      <IndustriesPreview onOpenContact={handleOpenContact} />
       <Footer onOpenContact={handleOpenContact} />
       <ContactOverlay ref={contactOverlayRef} />
     </>

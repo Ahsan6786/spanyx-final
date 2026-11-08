@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { CareerPostingItem, CareerApplicationItem } from '@/lib/db/queries';
 
@@ -167,48 +167,53 @@ export default function AdminCareersPage() {
     }
   };
 
+  const headerActions = useMemo(
+    () => (
+      <button
+        type="button"
+        onClick={() => {
+          setIsCreatingNewPosting(true);
+          setEditingPosting({
+            title: '',
+            posting_type: 'internship',
+            category: 'Internship Opportunities',
+            department: 'Engineering',
+            work_mode: 'Remote',
+            location: 'Remote (India)',
+            duration: '3 Months',
+            is_paid: 1,
+            stipend: '₹15,000 - ₹20,000 / month',
+            required_skills: '',
+            eligibility: 'College students and recent graduates',
+            certificate_available: 1,
+            has_ppo: 1,
+            description: '',
+            responsibilities: '',
+            status: 'published',
+          });
+        }}
+        className="admin-btn-primary"
+        style={{
+          padding: '8px 16px',
+          background: '#060e24',
+          color: '#ffffff',
+          border: 'none',
+          borderRadius: 8,
+          fontSize: 13.5,
+          fontWeight: 600,
+          cursor: 'pointer',
+        }}
+      >
+        + Add Opportunity
+      </button>
+    ),
+    []
+  );
+
   return (
     <AdminLayout
       title="Careers &amp; Internship Management"
-      actions={
-        <button
-          type="button"
-          onClick={() => {
-            setIsCreatingNewPosting(true);
-            setEditingPosting({
-              title: '',
-              posting_type: 'internship',
-              category: 'Internship Opportunities',
-              department: 'Engineering',
-              work_mode: 'Remote',
-              location: 'Remote (India)',
-              duration: '3 Months',
-              is_paid: 1,
-              stipend: '₹15,000 - ₹20,000 / month',
-              required_skills: '',
-              eligibility: 'College students and recent graduates',
-              certificate_available: 1,
-              has_ppo: 1,
-              description: '',
-              responsibilities: '',
-              status: 'published',
-            });
-          }}
-          className="admin-btn-primary"
-          style={{
-            padding: '8px 16px',
-            background: '#060e24',
-            color: '#ffffff',
-            border: 'none',
-            borderRadius: 8,
-            fontSize: 13.5,
-            fontWeight: 600,
-            cursor: 'pointer',
-          }}
-        >
-          + Add Opportunity
-        </button>
-      }
+      actions={headerActions}
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
         {/* Metric Summary Cards */}

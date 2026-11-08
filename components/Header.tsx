@@ -21,7 +21,8 @@ export default function Header({
 }: HeaderProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const [isMenuOpen, setIsMenuOpen] = useState(alwaysOpen);
+  const isLandingPage = pathname === '/';
+  const [isMenuOpen, setIsMenuOpen] = useState(isLandingPage && alwaysOpen);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   // Ensure mobile menu is strictly closed on page navigation
@@ -571,11 +572,17 @@ export default function Header({
         <div className={`header-brand-group ${!showLogo ? 'has-no-logo' : ''}`}>
           {showLogo && (
             <a href="/" className="brand-link" aria-label="Spanyx Homepage">
-              <img
-                src="/span/logo.png"
-                alt="Spanyx - Building Smarter Solutions"
-                className="brand-logo"
-              />
+              <picture>
+                <source srcSet="/span/logo.webp" type="image/webp" />
+                <img
+                  src="/span/logo.png"
+                  alt="Spanyx - Building Smarter Solutions"
+                  className="brand-logo"
+                  width={2171}
+                  height={724}
+                  loading="eager"
+                />
+              </picture>
             </a>
           )}
           {showBackButton && (
@@ -604,86 +611,90 @@ export default function Header({
           )}
         </div>
 
-        {/* Liquid Glass Dynamic Navbar in center when expanded (Exact UI of liquid-glass-navbar-v2.html) */}
-        <div
-          className={`lg ${isMenuOpen ? 'is-open' : 'is-closed'}`}
-          ref={lgWrapperRef}
-          aria-hidden={!isMenuOpen}
-        >
-          <div className="lg-in" id="lgIn" data-theme="light">
-            <nav
-              className="track"
-              id="track"
-              ref={trackRef}
-              aria-label="Main"
-            >
-              <a href="/">
-                <svg viewBox="0 0 24 24">
-                  <path d="M3 10.5L12 3l9 7.5v9a1.5 1.5 0 0 1-1.5 1.5h-4.5a1 1 0 0 1-1-1v-4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v4a1 1 0 0 1-1 1H4.5A1.5 1.5 0 0 1 3 19.5v-9z" />
-                </svg>
-                <span>Home</span>
-              </a>
-              <a href="/about">
-                <svg viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M12 16v-4M12 8h.01" />
-                </svg>
-                <span>About</span>
-              </a>
-              <a href="/#what-we-do">
-                <svg viewBox="0 0 24 24">
-                  <rect x="4" y="4" width="16" height="16" rx="2" />
-                  <rect x="9" y="9" width="6" height="6" />
-                  <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3" />
-                </svg>
-                <span>Technology</span>
-              </a>
-              <a href="/#what-we-create">
-                <svg viewBox="0 0 24 24">
-                  <rect x="2" y="7" width="20" height="14" rx="2" />
-                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                </svg>
-                <span>Services</span>
-              </a>
-            </nav>
+        {/* Liquid Glass Dynamic Navbar in center when expanded (STRICTLY Landing Page Only) */}
+        {isLandingPage && (
+          <div
+            className={`lg ${isMenuOpen ? 'is-open' : 'is-closed'}`}
+            ref={lgWrapperRef}
+            aria-hidden={!isMenuOpen}
+          >
+            <div className="lg-in" id="lgIn" data-theme="light">
+              <nav
+                className="track"
+                id="track"
+                ref={trackRef}
+                aria-label="Main"
+              >
+                <a href="/">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M3 10.5L12 3l9 7.5v9a1.5 1.5 0 0 1-1.5 1.5h-4.5a1 1 0 0 1-1-1v-4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v4a1 1 0 0 1-1 1H4.5A1.5 1.5 0 0 1 3 19.5v-9z" />
+                  </svg>
+                  <span>Home</span>
+                </a>
+                <a href="/about">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M12 16v-4M12 8h.01" />
+                  </svg>
+                  <span>About</span>
+                </a>
+                <a href="/#what-we-do">
+                  <svg viewBox="0 0 24 24">
+                    <rect x="4" y="4" width="16" height="16" rx="2" />
+                    <rect x="9" y="9" width="6" height="6" />
+                    <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3" />
+                  </svg>
+                  <span>Technology</span>
+                </a>
+                <a href="/#what-we-create">
+                  <svg viewBox="0 0 24 24">
+                    <rect x="2" y="7" width="20" height="14" rx="2" />
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                  </svg>
+                  <span>Services</span>
+                </a>
+              </nav>
 
-            <div className="lens" id="lens" ref={lensRef} aria-hidden="true">
-              <div className="refr" id="refr" ref={refrRef}>
-                <div className="clone" id="clone" ref={cloneRef}></div>
+              <div className="lens" id="lens" ref={lensRef} aria-hidden="true">
+                <div className="refr" id="refr" ref={refrRef}>
+                  <div className="clone" id="clone" ref={cloneRef}></div>
+                </div>
+                <i className="gloss"></i>
               </div>
-              <i className="gloss"></i>
             </div>
           </div>
-        </div>
+        )}
 
-        {/* Right Action Group: Menu Button + Contact Us */}
+        {/* Right Action Group: Menu Button (Landing only) + Contact Us */}
         <div className="header-actions" ref={headerActionsRef}>
-          <button
-            type="button"
-            className={`header-menu-btn ${isMenuOpen || isMobileNavOpen ? 'is-active' : ''}`}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-              if (isMobile) {
-                setIsMobileNavOpen((prev) => !prev);
-              } else {
-                if (!alwaysOpen) {
-                  setIsMenuOpen((prev) => !prev);
+          {isLandingPage && (
+            <button
+              type="button"
+              className={`header-menu-btn ${isMenuOpen || isMobileNavOpen ? 'is-active' : ''}`}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+                if (isMobile) {
+                  setIsMobileNavOpen((prev) => !prev);
+                } else {
+                  if (!alwaysOpen) {
+                    setIsMenuOpen((prev) => !prev);
+                  }
                 }
-              }
-            }}
-            aria-expanded={isMobileNavOpen || isMenuOpen}
-            aria-label="Toggle Navigation Menu"
-            title="Menu"
-          >
-            <span className="header-menu-dots" aria-hidden="true">
-              <span></span><span></span>
-              <span></span><span></span>
-              <span></span><span></span>
-            </span>
-            <span className="header-menu-title">Menu</span>
-          </button>
+              }}
+              aria-expanded={isMobileNavOpen || isMenuOpen}
+              aria-label="Toggle Navigation Menu"
+              title="Menu"
+            >
+              <span className="header-menu-dots" aria-hidden="true">
+                <span></span><span></span>
+                <span></span><span></span>
+                <span></span><span></span>
+              </span>
+              <span className="header-menu-title">Menu</span>
+            </button>
+          )}
 
           <a
             href="#contact"
@@ -713,12 +724,14 @@ export default function Header({
         </div>
       </div>
 
-      {/* Full-Screen Black Mobile Navigation Menu (Matching Reference UI) */}
-      <MobileFullscreenMenu
-        isOpen={isMobileNavOpen}
-        onClose={() => setIsMobileNavOpen(false)}
-        onOpenContact={onOpenContact}
-      />
+      {/* Full-Screen Black Mobile Navigation Menu (STRICTLY Landing Page Only) */}
+      {isLandingPage && (
+        <MobileFullscreenMenu
+          isOpen={isMobileNavOpen}
+          onClose={() => setIsMobileNavOpen(false)}
+          onOpenContact={onOpenContact}
+        />
+      )}
     </header>
   );
 }

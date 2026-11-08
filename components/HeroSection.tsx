@@ -117,9 +117,9 @@ export default function HeroSection({ onOpenContact }: HeroSectionProps) {
             {/* Left Info Block */}
             <div className="hero-card-content">
               <p className="hero-card-description">
-                Trusted by leading universities and organizations across India,
-                SPANYX is recognized for its attention to detail, refined solutions,
-                reliable services, and commitment to on-time delivery.
+                We build reliable software, websites, and digital systems for
+                businesses and universities. Delivered on time with clean
+                engineering.
               </p>
 
               {/* Apple-style Glass Cards */}
@@ -171,13 +171,18 @@ export default function HeroSection({ onOpenContact }: HeroSectionProps) {
                 id="shortMockupWrap"
                 ref={shortMockupWrapRef}
               >
-                <img
-                  src="/span/short-clean.png"
-                  alt="Spanyx Project Management in progress iPhone mockup"
-                  className="mockup-img mockup-short"
-                  loading="eager"
-                  fetchPriority="high"
-                />
+                <picture>
+                  <source srcSet="/span/short-clean.webp" type="image/webp" />
+                  <img
+                    src="/span/short-clean.png"
+                    alt="Spanyx Project Management in progress iPhone mockup"
+                    className="mockup-img mockup-short"
+                    loading="eager"
+                    fetchPriority="high"
+                    width={908}
+                    height={1008}
+                  />
+                </picture>
               </div>
 
               {/* Long iPhone Mockup (Main screen with 3D ribbon logo, sticks out above card) */}
@@ -186,13 +191,18 @@ export default function HeroSection({ onOpenContact }: HeroSectionProps) {
                 id="longMockupWrap"
                 ref={longMockupWrapRef}
               >
-                <img
-                  src="/span/long1.png"
-                  alt="Spanyx Software Solutions iPhone mockup"
-                  className="mockup-img mockup-long"
-                  loading="eager"
-                  fetchPriority="high"
-                />
+                <picture>
+                  <source srcSet="/span/long1.webp" type="image/webp" />
+                  <img
+                    src="/span/long1.png"
+                    alt="Spanyx Software Solutions iPhone mockup"
+                    className="mockup-img mockup-long"
+                    loading="eager"
+                    fetchPriority="high"
+                    width={1024}
+                    height={1536}
+                  />
+                </picture>
               </div>
             </div>
           </div>

@@ -219,25 +219,44 @@ export default function StorytellingSection() {
       '(prefers-reduced-motion: reduce)'
     ).matches;
 
-    const tick = (time: number) => {
-      if (isVisible) {
-        drawFrame(time);
-      }
-      if (!reducedMotion) {
+    let running = false;
+
+    const startLoop = () => {
+      if (!running && !reducedMotion && isVisible) {
+        running = true;
         rafId = requestAnimationFrame(tick);
       }
     };
 
+    const stopLoop = () => {
+      running = false;
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+    };
+
+    const tick = (time: number) => {
+      if (!running || !isVisible) {
+        running = false;
+        return;
+      }
+      drawFrame(time);
+      rafId = requestAnimationFrame(tick);
+    };
+
     resize();
     drawFrame(0);
-    if (!reducedMotion) {
-      rafId = requestAnimationFrame(tick);
-    }
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           isVisible = entry.isIntersecting;
+          if (isVisible) {
+            startLoop();
+          } else {
+            stopLoop();
+          }
         });
       },
       { threshold: 0.01 }
@@ -246,7 +265,7 @@ export default function StorytellingSection() {
 
     window.addEventListener('resize', resize);
     return () => {
-      cancelAnimationFrame(rafId);
+      stopLoop();
       observer.disconnect();
       window.removeEventListener('resize', resize);
     };

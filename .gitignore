@@ -15,6 +15,8 @@ dist/
 /data/*.db
 /data/*.db-wal
 /data/*.db-shm
+/data/*.pid
+scratch/
 
 # Environment variables
 .env

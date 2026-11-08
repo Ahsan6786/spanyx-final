@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import CookieConsentBanner from './CookieConsentBanner';
 import CookiePreferencesModal, { CookiePreferences } from './CookiePreferencesModal';
 
@@ -29,6 +30,11 @@ export function getOrCreateVisitorId(): string {
 }
 
 export default function CookieManager() {
+  const pathname = usePathname();
+  if (pathname.startsWith('/admin')) {
+    return null;
+  }
+
   const [hasLoaded, setHasLoaded] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
   const [showModal, setShowModal] = useState(false);

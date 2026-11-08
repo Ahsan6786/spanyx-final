@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useAdminContext } from './AdminContext';
 
 interface AdminLayoutProps {
@@ -15,14 +15,28 @@ export default function AdminLayout({
   actions = null,
 }: AdminLayoutProps) {
   const { setTitle, setActions } = useAdminContext();
+  const prevTitleRef = useRef<string>('');
+  const prevActionsRef = useRef<React.ReactNode>(null);
 
   useEffect(() => {
-    if (title) setTitle(title);
-    setActions(actions || null);
+    if (title && prevTitleRef.current !== title) {
+      prevTitleRef.current = title;
+      setTitle(title);
+    }
+  }, [title, setTitle]);
+
+  useEffect(() => {
+    if (prevActionsRef.current !== actions) {
+      prevActionsRef.current = actions;
+      setActions(actions || null);
+    }
+  }, [actions, setActions]);
+
+  useEffect(() => {
     return () => {
       setActions(null);
     };
-  }, [title, actions, setTitle, setActions]);
+  }, [setActions]);
 
   return <>{children}</>;
 }

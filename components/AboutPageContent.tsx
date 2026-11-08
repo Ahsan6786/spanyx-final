@@ -99,30 +99,42 @@ export default function AboutPageContent() {
             {/* Client Logos Grid (Simple & Borderless like Screenshot) */}
             <div className="about-clients-logo-grid" aria-label="Our Clients">
               <div className="about-client-logo-card">
-                <img
-                  src="/partners/trademax.png"
-                  alt="TradeMax"
-                  className="about-client-logo-img"
-                  loading="lazy"
-                />
+                <picture>
+                  <source srcSet="/partners/trademax.webp" type="image/webp" />
+                  <img
+                    src="/partners/trademax.png"
+                    alt="TradeMax"
+                    className="about-client-logo-img"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
               </div>
 
               <div className="about-client-logo-card">
-                <img
-                  src="/partners/ltc.png"
-                  alt="LTC"
-                  className="about-client-logo-img"
-                  loading="lazy"
-                />
+                <picture>
+                  <source srcSet="/partners/ltc.webp" type="image/webp" />
+                  <img
+                    src="/partners/ltc.png"
+                    alt="LTC"
+                    className="about-client-logo-img"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
               </div>
 
               <div className="about-client-logo-card">
-                <img
-                  src="/partners/rural-immersion.png"
-                  alt="Rural Immersion"
-                  className="about-client-logo-img is-contained"
-                  loading="lazy"
-                />
+                <picture>
+                  <source srcSet="/partners/rural-immersion.webp" type="image/webp" />
+                  <img
+                    src="/partners/rural-immersion.png"
+                    alt="Rural Immersion"
+                    className="about-client-logo-img is-contained"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
               </div>
 
               <div className="about-client-logo-card">
@@ -131,16 +143,21 @@ export default function AboutPageContent() {
                   alt="Revial"
                   className="about-client-logo-img"
                   loading="lazy"
+                  decoding="async"
                 />
               </div>
 
               <div className="about-client-logo-card">
-                <img
-                  src="/partners/partner-logo-1.png"
-                  alt="Academic Research Partner"
-                  className="about-client-logo-img"
-                  loading="lazy"
-                />
+                <picture>
+                  <source srcSet="/partners/partner-logo-1.webp" type="image/webp" />
+                  <img
+                    src="/partners/partner-logo-1.png"
+                    alt="Academic Research Partner"
+                    className="about-client-logo-img"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
               </div>
 
               <div className="about-client-logo-card">
@@ -149,6 +166,7 @@ export default function AboutPageContent() {
                   alt="Client Partner"
                   className="about-client-logo-img is-contained"
                   loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>

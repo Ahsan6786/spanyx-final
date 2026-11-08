@@ -296,6 +296,10 @@ export default function WhatWeOfferStack({
     if (total <= 1) return;
 
     let ticking = false;
+    let isDarkState = false;
+    const pageEl = document.querySelector('.sdp-page');
+    let lastActiveIdx = activeIndex;
+
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
@@ -308,8 +312,9 @@ export default function WhatWeOfferStack({
             const isOfferInView =
               rect.top <= window.innerHeight * 0.65 &&
               rect.bottom >= window.innerHeight * 0.15;
-            const pageEl = document.querySelector('.sdp-page');
-            if (pageEl) {
+
+            if (pageEl && isOfferInView !== isDarkState) {
+              isDarkState = isOfferInView;
               if (isOfferInView) {
                 pageEl.classList.add('is-offer-dark');
               } else {
@@ -319,6 +324,7 @@ export default function WhatWeOfferStack({
 
             if (totalScrollable > 0) {
               const scrolledPastTop = -rect.top;
+              let targetIdx = 0;
               if (scrolledPastTop >= 0 && scrolledPastTop <= totalScrollable) {
                 const rawProgress = scrolledPastTop / totalScrollable;
                 // Add resting buffer so cards stay calm and don't rush
@@ -327,15 +333,17 @@ export default function WhatWeOfferStack({
                   0,
                   Math.min(1, (rawProgress - buffer) / (1 - buffer * 2))
                 );
-                const targetIdx = Math.min(
+                targetIdx = Math.min(
                   total - 1,
                   Math.floor(effectiveProgress * total)
                 );
+              } else if (scrolledPastTop > totalScrollable) {
+                targetIdx = total - 1;
+              }
+
+              if (targetIdx !== lastActiveIdx) {
+                lastActiveIdx = targetIdx;
                 setActiveIndex(targetIdx);
-              } else if (scrolledPastTop < 0) {
-                setActiveIndex(0);
-              } else {
-                setActiveIndex(total - 1);
               }
             }
           }
@@ -349,7 +357,7 @@ export default function WhatWeOfferStack({
     handleScroll(); // Initial check
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      document.querySelector('.sdp-page')?.classList.remove('is-offer-dark');
+      pageEl?.classList.remove('is-offer-dark');
     };
   }, [total]);
 

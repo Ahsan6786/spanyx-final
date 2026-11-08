@@ -170,11 +170,18 @@ export default function BlogDetailContent({ blog }: BlogDetailContentProps) {
                   overflow: 'hidden',
                 }}
               >
-                <img
-                  src={blog.author_avatar || '/span/small-logo.png'}
-                  alt=""
-                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                />
+                <picture>
+                  {!blog.author_avatar && <source srcSet="/span/small-logo.webp" type="image/webp" />}
+                  <img
+                    src={blog.author_avatar || '/span/small-logo.png'}
+                    alt={blog.author_name}
+                    width={44}
+                    height={44}
+                    loading="lazy"
+                    decoding="async"
+                    style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                  />
+                </picture>
               </div>
               <div>
                 <div style={{ fontSize: 14, fontWeight: 700, color: '#060e24' }}>
@@ -277,6 +284,8 @@ export default function BlogDetailContent({ blog }: BlogDetailContentProps) {
             <img
               src={blog.featured_image}
               alt={blog.title}
+              loading="lazy"
+              decoding="async"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
           </div>

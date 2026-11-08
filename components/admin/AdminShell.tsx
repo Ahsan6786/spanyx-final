@@ -243,7 +243,10 @@ export default function AdminShell({ children }: AdminShellProps) {
               prefetch={true}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <img src="/span/logo.png" alt="Spanyx" className="admin-sidebar-logo" />
+              <picture>
+                <source srcSet="/span/logo.webp" type="image/webp" />
+                <img src="/span/logo.png" alt="Spanyx" className="admin-sidebar-logo" width={140} height={46} decoding="async" />
+              </picture>
             </Link>
 
             {/* Close button for mobile drawer */}

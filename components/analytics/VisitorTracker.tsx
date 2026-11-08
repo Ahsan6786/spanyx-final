@@ -85,9 +85,12 @@ export default function VisitorTracker() {
   const maxScrollDepthRef = useRef<number>(0);
   const scrollMilestonesHitRef = useRef<Set<number>>(new Set());
 
+  // Never execute telemetry or scroll listeners inside the administrative portal
+  const isAdmin = pathname.startsWith('/admin');
+
   // Check if visitor has consented to analytics
   const hasAnalyticsConsent = () => {
-    if (typeof window === 'undefined') return false;
+    if (typeof window === 'undefined' || isAdmin) return false;
     return !!window.SpanyxConsent?.hasConsent('analytics');
   };
 
@@ -165,49 +168,59 @@ export default function VisitorTracker() {
     };
   }, [pathname]);
 
-  // 2. Scroll Depth tracking (25%, 50%, 75%, 100%)
+  // 2. Scroll Depth tracking (25%, 50%, 75%, 100%) - RAF throttled
   useEffect(() => {
+    if (isAdmin) return;
+
+    let ticking = false;
     const handleScroll = () => {
-      if (!hasAnalyticsConsent()) return;
+      if (ticking) return;
+      ticking = true;
 
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      if (docHeight <= 0) return;
+      window.requestAnimationFrame(() => {
+        ticking = false;
+        if (!hasAnalyticsConsent()) return;
 
-      const scrollPct = Math.min(100, Math.round((scrollTop / docHeight) * 100));
-      if (scrollPct > maxScrollDepthRef.current) {
-        maxScrollDepthRef.current = scrollPct;
-      }
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (docHeight <= 0) return;
 
-      const milestones = [25, 50, 75, 100];
-      for (const m of milestones) {
-        if (scrollPct >= m && !scrollMilestonesHitRef.current.has(m)) {
-          scrollMilestonesHitRef.current.add(m);
-          const visitorId = getOrCreateVisitorId();
-          const sessionId = getOrCreateSessionId();
-
-          sendPayload({
-            type: 'event',
-            visitor_id: visitorId,
-            session_id: sessionId,
-            page_url: window.location.pathname,
-            event_data: {
-              name: `scroll_${m}`,
-              category: 'engagement',
-              elementText: `${m}% Scroll Depth`,
-              metadata: { milestone: m },
-            },
-          });
+        const scrollPct = Math.min(100, Math.round((scrollTop / docHeight) * 100));
+        if (scrollPct > maxScrollDepthRef.current) {
+          maxScrollDepthRef.current = scrollPct;
         }
-      }
+
+        const milestones = [25, 50, 75, 100];
+        for (const m of milestones) {
+          if (scrollPct >= m && !scrollMilestonesHitRef.current.has(m)) {
+            scrollMilestonesHitRef.current.add(m);
+            const visitorId = getOrCreateVisitorId();
+            const sessionId = getOrCreateSessionId();
+
+            sendPayload({
+              type: 'event',
+              visitor_id: visitorId,
+              session_id: sessionId,
+              page_url: window.location.pathname,
+              event_data: {
+                name: `scroll_${m}`,
+                category: 'engagement',
+                elementText: `${m}% Scroll Depth`,
+                metadata: { milestone: m },
+              },
+            });
+          }
+        }
+      });
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isAdmin]);
 
   // 3. CTA and User Interaction Click Tracking
   useEffect(() => {
+    if (isAdmin) return;
     const handleClick = (e: MouseEvent) => {
       if (!hasAnalyticsConsent()) return;
 
@@ -258,6 +271,7 @@ export default function VisitorTracker() {
 
   // 4. Listen for consent updates (starts tracking immediately upon consent grant)
   useEffect(() => {
+    if (isAdmin) return;
     const handleConsentUpdated = (e: any) => {
       if (e.detail?.preferences?.analytics) {
         const visitorId = getOrCreateVisitorId();

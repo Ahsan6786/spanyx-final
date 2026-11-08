@@ -2,14 +2,20 @@
 
 import React from 'react';
 import Link from 'next/link';
+import ContactSection from './ContactSection';
 
 interface FooterProps {
   onOpenContact?: (buttonEl: HTMLElement) => void;
+  hideContactForm?: boolean;
 }
 
-export default function Footer({ onOpenContact }: FooterProps) {
+export default function Footer({ onOpenContact, hideContactForm = false }: FooterProps) {
   const handleContactClick = (e: React.MouseEvent<HTMLElement>) => {
-    if (onOpenContact) {
+    const contactEl = document.getElementById('contact');
+    if (contactEl) {
+      e.preventDefault();
+      contactEl.scrollIntoView({ behavior: 'smooth' });
+    } else if (onOpenContact) {
       e.preventDefault();
       onOpenContact(e.currentTarget);
     }
@@ -21,7 +27,9 @@ export default function Footer({ onOpenContact }: FooterProps) {
   };
 
   return (
-    <footer className="sp-gradient-footer" aria-label="Spanyx Footer">
+    <>
+      {!hideContactForm && <ContactSection />}
+      <footer className="sp-gradient-footer" aria-label="Spanyx Footer">
       <div className="sp-foot-canvas">
         {/* Top Header Row with Navigation */}
         <div className="sp-foot-top-row">
@@ -112,5 +120,6 @@ export default function Footer({ onOpenContact }: FooterProps) {
         </div>
       </div>
     </footer>
+    </>
   );
 }

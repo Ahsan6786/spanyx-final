@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
 // Responsive Interactive SVG Area Chart for Visitors & Sessions over time
-export function AreaTimelineChart({
+export const AreaTimelineChart = React.memo(function AreaTimelineChart({
   data,
   height = 260,
 }: {
@@ -12,7 +12,37 @@ export function AreaTimelineChart({
 }) {
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
-  if (!data || data.length === 0) {
+  const width = 800;
+  const paddingX = 44;
+  const paddingY = 32;
+
+  const chartData = useMemo(() => {
+    if (!data || data.length === 0) return null;
+
+    const maxVal = Math.max(...data.map((d) => Math.max(d.visitors, d.sessions)), 6);
+    const chartW = width - paddingX * 2;
+    const chartH = height - paddingY * 2;
+
+    const pointsV = data.map((d, i) => {
+      const x = paddingX + (i / Math.max(data.length - 1, 1)) * chartW;
+      const y = height - paddingY - (d.visitors / maxVal) * chartH;
+      return { x, y, val: d.visitors };
+    });
+
+    const pointsS = data.map((d, i) => {
+      const x = paddingX + (i / Math.max(data.length - 1, 1)) * chartW;
+      const y = height - paddingY - (d.sessions / maxVal) * chartH;
+      return { x, y, val: d.sessions };
+    });
+
+    const pathV = pointsV.map((p, i) => (i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`)).join(' ');
+    const pathS = pointsS.map((p, i) => (i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`)).join(' ');
+    const areaV = `${pathV} L ${width - paddingX} ${height - paddingY} L ${paddingX} ${height - paddingY} Z`;
+
+    return { maxVal, chartW, chartH, pointsV, pointsS, pathV, pathS, areaV };
+  }, [data, height]);
+
+  if (!chartData || !data || data.length === 0) {
     return (
       <div
         style={{
@@ -35,29 +65,7 @@ export function AreaTimelineChart({
     );
   }
 
-  const maxVal = Math.max(...data.map((d) => Math.max(d.visitors, d.sessions)), 6);
-  const width = 800;
-  const paddingX = 44;
-  const paddingY = 32;
-  const chartW = width - paddingX * 2;
-  const chartH = height - paddingY * 2;
-
-  const pointsV = data.map((d, i) => {
-    const x = paddingX + (i / Math.max(data.length - 1, 1)) * chartW;
-    const y = height - paddingY - (d.visitors / maxVal) * chartH;
-    return { x, y, val: d.visitors };
-  });
-
-  const pointsS = data.map((d, i) => {
-    const x = paddingX + (i / Math.max(data.length - 1, 1)) * chartW;
-    const y = height - paddingY - (d.sessions / maxVal) * chartH;
-    return { x, y, val: d.sessions };
-  });
-
-  const pathV = pointsV.map((p, i) => (i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`)).join(' ');
-  const pathS = pointsS.map((p, i) => (i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`)).join(' ');
-  const areaV = `${pathV} L ${width - paddingX} ${height - paddingY} L ${paddingX} ${height - paddingY} Z`;
-
+  const { maxVal, chartW, chartH, pointsV, pointsS, pathV, pathS, areaV } = chartData;
   const activeItem = hoverIndex !== null && data[hoverIndex] ? data[hoverIndex] : null;
   const activePointV = hoverIndex !== null && pointsV[hoverIndex] ? pointsV[hoverIndex] : null;
 
@@ -274,10 +282,10 @@ export function AreaTimelineChart({
       </div>
     </div>
   );
-}
+});
 
 // Interactive Donut Chart for Breakdown distributions
-export function InteractiveDonutChart({
+export const InteractiveDonutChart = React.memo(function InteractiveDonutChart({
   items,
   totalLabel = 'Total',
   size = 190,
@@ -288,35 +296,45 @@ export function InteractiveDonutChart({
 }) {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
 
-  const total = items.reduce((sum, item) => sum + item.count, 0);
+  const defaultColors = useMemo(
+    () => ['#0071e3', '#38bdf8', '#818cf8', '#34d399', '#fbbf24', '#f87171'],
+    []
+  );
+  const strokeWidth = 22;
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
 
-  if (total === 0 || items.length === 0) {
+  const { total, slices } = useMemo(() => {
+    const tot = (items || []).reduce((sum, item) => sum + item.count, 0);
+    if (tot === 0 || !items || items.length === 0) {
+      return { total: 0, slices: [] };
+    }
+
+    let cumulativeAngle = 0;
+    const sls = items.map((item, idx) => {
+      const fraction = item.count / tot;
+      const strokeDasharray = `${circumference * fraction} ${circumference * (1 - fraction)}`;
+      const strokeDashoffset = -cumulativeAngle * circumference;
+      cumulativeAngle += fraction;
+      return {
+        ...item,
+        color: item.color || defaultColors[idx % defaultColors.length],
+        strokeDasharray,
+        strokeDashoffset,
+        fraction,
+      };
+    });
+
+    return { total: tot, slices: sls };
+  }, [items, circumference, defaultColors]);
+
+  if (total === 0 || !items || items.length === 0) {
     return (
       <div style={{ height: size, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', fontSize: 13 }}>
         No distribution telemetry available.
       </div>
     );
   }
-
-  const defaultColors = ['#0071e3', '#38bdf8', '#818cf8', '#34d399', '#fbbf24', '#f87171'];
-  const strokeWidth = 22;
-  const radius = (size - strokeWidth) / 2;
-  const circumference = 2 * Math.PI * radius;
-
-  let cumulativeAngle = 0;
-  const slices = items.map((item, idx) => {
-    const fraction = item.count / total;
-    const strokeDasharray = `${circumference * fraction} ${circumference * (1 - fraction)}`;
-    const strokeDashoffset = -cumulativeAngle * circumference;
-    cumulativeAngle += fraction;
-    return {
-      ...item,
-      color: item.color || defaultColors[idx % defaultColors.length],
-      strokeDasharray,
-      strokeDashoffset,
-      fraction,
-    };
-  });
 
   const activeItem = activeIdx !== null ? slices[activeIdx] : null;
 
@@ -398,15 +416,15 @@ export function InteractiveDonutChart({
       </div>
     </div>
   );
-}
+});
 
 // Horizontal Comparative Bar Chart for Services / Pages
-export function HorizontalBarChart({
+export const HorizontalBarChart = React.memo(function HorizontalBarChart({
   items,
 }: {
   items: { label: string; value: number; secondary?: string }[];
 }) {
-  const max = Math.max(...items.map((i) => i.value), 1);
+  const max = useMemo(() => Math.max(...(items || []).map((i) => i.value), 1), [items]);
 
   if (!items || items.length === 0) {
     return (
@@ -460,4 +478,4 @@ export function HorizontalBarChart({
       })}
     </div>
   );
-}
+});

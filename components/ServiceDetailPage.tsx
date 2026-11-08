@@ -147,12 +147,19 @@ export default function ServiceDetailPage({
                         style={{ objectFit: 'cover' }}
                       />
                     ) : (
-                      <img
-                        src={category.image}
-                        alt={`${category.title} — SPANYX Showcase`}
-                        className="sdp-visual-img"
-                        loading="eager"
-                      />
+                      <picture>
+                        <source
+                          srcSet={category.image.replace(/\.(png|jpe?g)$/i, '.webp')}
+                          type="image/webp"
+                        />
+                        <img
+                          src={category.image}
+                          alt={`${category.title} — SPANYX Showcase`}
+                          className="sdp-visual-img"
+                          loading="eager"
+                          decoding="async"
+                        />
+                      </picture>
                     )}
                   </div>
                 </div>
@@ -237,12 +244,19 @@ export default function ServiceDetailPage({
 
                 <div className="sdp-mobile-visual">
                   <div className="sdp-mobile-frame">
-                    <img
-                      src={category.mobileShowcase.image}
-                      alt={category.mobileShowcase.heading}
-                      className="sdp-mobile-img"
-                      loading="lazy"
-                    />
+                    <picture>
+                      <source
+                        srcSet={category.mobileShowcase.image.replace(/\.(png|jpe?g)$/i, '.webp')}
+                        type="image/webp"
+                      />
+                      <img
+                        src={category.mobileShowcase.image}
+                        alt={category.mobileShowcase.heading}
+                        className="sdp-mobile-img"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
                   </div>
                 </div>
               </div>

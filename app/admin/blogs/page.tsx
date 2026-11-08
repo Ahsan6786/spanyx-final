@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -77,35 +77,40 @@ export default function AdminBlogManagementPage() {
     }
   };
 
+  const headerActions = useMemo(
+    () => (
+      <Link
+        href="/admin/blogs/new"
+        className="admin-btn-primary"
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 8,
+          padding: '9px 18px',
+          borderRadius: 8,
+          background: '#0071e3',
+          color: '#ffffff',
+          fontWeight: 600,
+          fontSize: 13.5,
+          textDecoration: 'none',
+          boxShadow: '0 4px 14px rgba(0, 113, 227, 0.35)',
+          transition: 'all 0.18s ease',
+        }}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+        <span>Write New Article</span>
+      </Link>
+    ),
+    []
+  );
+
   return (
     <AdminLayout
       title="Blog &amp; Content Management"
-      actions={
-        <Link
-          href="/admin/blogs/new"
-          className="admin-btn-primary"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 8,
-            padding: '9px 18px',
-            borderRadius: 8,
-            background: '#0071e3',
-            color: '#ffffff',
-            fontWeight: 600,
-            fontSize: 13.5,
-            textDecoration: 'none',
-            boxShadow: '0 4px 14px rgba(0, 113, 227, 0.35)',
-            transition: 'all 0.18s ease',
-          }}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-            <line x1="12" y1="5" x2="12" y2="19" />
-            <line x1="5" y1="12" x2="19" y2="12" />
-          </svg>
-          <span>Write New Article</span>
-        </Link>
-      }
+      actions={headerActions}
     >
       {/* 4 Stat Overview Cards */}
       <div className="admin-kpi-grid">
@@ -322,6 +327,8 @@ export default function AdminBlogManagementPage() {
                           <img
                             src={b.featured_image}
                             alt=""
+                            loading="lazy"
+                            decoding="async"
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                           />
                         ) : (
@@ -553,6 +560,8 @@ export default function AdminBlogManagementPage() {
                 <img
                   src={previewBlog.featured_image}
                   alt=""
+                  loading="lazy"
+                  decoding="async"
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
               </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useMemo, useCallback } from 'react';
 
 interface AdminContextType {
   title: string;
@@ -17,11 +17,24 @@ const AdminContext = createContext<AdminContextType>({
 });
 
 export function AdminProvider({ children }: { children: React.ReactNode }) {
-  const [title, setTitle] = useState('Intelligence Dashboard');
-  const [actions, setActions] = useState<React.ReactNode>(null);
+  const [title, setTitleState] = useState('Intelligence Dashboard');
+  const [actions, setActionsState] = useState<React.ReactNode>(null);
+
+  const setTitle = useCallback((newTitle: string) => {
+    setTitleState((prev) => (prev !== newTitle ? newTitle : prev));
+  }, []);
+
+  const setActions = useCallback((newActions: React.ReactNode) => {
+    setActionsState(newActions);
+  }, []);
+
+  const value = useMemo(
+    () => ({ title, setTitle, actions, setActions }),
+    [title, setTitle, actions, setActions]
+  );
 
   return (
-    <AdminContext.Provider value={{ title, setTitle, actions, setActions }}>
+    <AdminContext.Provider value={value}>
       {children}
     </AdminContext.Provider>
   );

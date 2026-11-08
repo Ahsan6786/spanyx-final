@@ -152,6 +152,7 @@ export default function IndustriesPageContent() {
                       alt={industry.name}
                       className="industry-card-icon"
                       loading="lazy"
+                      decoding="async"
                       width={80}
                       height={80}
                     />

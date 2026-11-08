@@ -367,11 +367,18 @@ export default function BlogPageContent() {
                             overflow: 'hidden',
                           }}
                         >
-                          <img
-                            src={featuredBlog.author_avatar || '/span/small-logo.png'}
-                            alt=""
-                            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                          />
+                          <picture>
+                            {!featuredBlog.author_avatar && <source srcSet="/span/small-logo.webp" type="image/webp" />}
+                            <img
+                              src={featuredBlog.author_avatar || '/span/small-logo.png'}
+                              alt=""
+                              width={34}
+                              height={34}
+                              loading="lazy"
+                              decoding="async"
+                              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                            />
+                          </picture>
                         </div>
                         <div>
                           <div style={{ fontSize: 13, fontWeight: 700, color: '#060e24' }}>
@@ -418,6 +425,8 @@ export default function BlogPageContent() {
                       <img
                         src={featuredBlog.featured_image}
                         alt={featuredBlog.title}
+                        loading="lazy"
+                        decoding="async"
                         style={{
                           width: '100%',
                           height: '100%',
@@ -462,6 +471,8 @@ export default function BlogPageContent() {
                         <img
                           src={b.featured_image}
                           alt={b.title}
+                          loading="lazy"
+                          decoding="async"
                           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         />
                       </Link>

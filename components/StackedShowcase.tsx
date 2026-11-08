@@ -17,6 +17,67 @@ interface StackedShowcaseProps {
   onOpenContact: (buttonEl: HTMLElement) => void;
 }
 
+const ShowcaseCards = React.memo(function ShowcaseCards({
+  categories,
+  cardsRef,
+  dimOverlaysRef,
+}: {
+  categories: ShowcaseCategoryDetail[];
+  cardsRef: React.MutableRefObject<(HTMLDivElement | null)[]>;
+  dimOverlaysRef: React.MutableRefObject<(HTMLDivElement | null)[]>;
+}) {
+  return (
+    <div className="showcase-cards-container">
+      {categories.map((cat, idx) => (
+        <article
+          key={cat.id}
+          className="showcase-card"
+          ref={(el) => {
+            cardsRef.current[idx] = el as HTMLDivElement | null;
+          }}
+          aria-label={cat.title}
+        >
+          <div className="showcase-card-inner">
+            {cat.video ? (
+              <video
+                src={cat.video}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="showcase-card-img"
+                style={{ objectFit: 'cover' }}
+              />
+            ) : (
+              <picture>
+                <source
+                  srcSet={cat.image.replace(/\.(png|jpe?g)$/i, '.webp')}
+                  type="image/webp"
+                />
+                <img
+                  src={cat.image}
+                  alt={`${cat.title} — SpanyX project showcase`}
+                  className="showcase-card-img"
+                  loading={idx === 0 ? 'eager' : 'lazy'}
+                  decoding={idx === 0 ? 'sync' : 'async'}
+                />
+              </picture>
+            )}
+
+            <div
+              className="showcase-card-dim"
+              ref={(el) => {
+                dimOverlaysRef.current[idx] = el;
+              }}
+              aria-hidden="true"
+            />
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+});
+
 export default function StackedShowcase({
   onOpenContact,
 }: StackedShowcaseProps) {
@@ -58,16 +119,20 @@ export default function StackedShowcase({
           trigger: section,
           pin: pinWrap,
           start: 'top top',
-          end: () => `+=${window.innerHeight * (isMobile ? total * 0.44 : total - 0.35)}`,
-          scrub: isMobile ? 0.45 : 0.65,
+          end: () => `+=${window.innerHeight * (isMobile ? total * 0.28 : total - 0.35)}`,
+          scrub: isMobile ? 0.25 : 0.65,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             const rawStep = self.progress * (total - 0.65);
-            const nextIdx = Math.min(
-              total - 1,
-              Math.max(0, Math.round(rawStep))
-            );
-            setActiveIndex((prev) => (prev !== nextIdx ? nextIdx : prev));
+            setActiveIndex((prev) => {
+              let next = prev;
+              if (rawStep > prev + 0.58 && prev < total - 1) {
+                next = Math.min(total - 1, Math.floor(rawStep + 0.42));
+              } else if (rawStep < prev - 0.42 && prev > 0) {
+                next = Math.max(0, Math.ceil(rawStep - 0.58));
+              }
+              return next !== prev ? next : prev;
+            });
           },
         },
       });
@@ -98,9 +163,9 @@ export default function StackedShowcase({
           const prevOverlay = dimOverlaysRef.current[j];
           const depth = i - j;
 
-          const yOffset = (isMobile ? -14 : -19) * depth;
-          const scaleVal = 1 - (isMobile ? 0.034 : 0.044) * depth;
-          const dimVal = Math.min(0.58, depth * 0.13);
+          const yOffset = (isMobile ? -8 : -19) * depth;
+          const scaleVal = 1 - (isMobile ? 0.024 : 0.044) * depth;
+          const dimVal = Math.min(0.58, depth * (isMobile ? 0.10 : 0.13));
 
           if (prevCard) {
             tl.to(
@@ -263,51 +328,15 @@ export default function StackedShowcase({
                 aria-hidden="true"
               />
 
-              <div className="showcase-cards-container">
-                {SHOWCASE_CATEGORIES.map((cat, idx) => (
-                  <article
-                    key={cat.id}
-                    className="showcase-card"
-                    ref={(el) => {
-                      cardsRef.current[idx] = el as HTMLDivElement | null;
-                    }}
-                    aria-label={cat.title}
-                  >
-                    <div className="showcase-card-inner">
-                      {cat.video ? (
-                        <video
-                          src={cat.video}
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
-                          className="showcase-card-img"
-                          style={{ objectFit: 'cover' }}
-                        />
-                      ) : (
-                        <img
-                          src={cat.image}
-                          alt={`${cat.title} — SpanyX project showcase`}
-                          className="showcase-card-img"
-                          loading="eager"
-                        />
-                      )}
-
-                      <div
-                        className="showcase-card-dim"
-                        ref={(el) => {
-                          dimOverlaysRef.current[idx] = el;
-                        }}
-                        aria-hidden="true"
-                      />
-                    </div>
-                  </article>
-                ))}
-              </div>
+              <ShowcaseCards
+                categories={SHOWCASE_CATEGORIES}
+                cardsRef={cardsRef}
+                dimOverlaysRef={dimOverlaysRef}
+              />
             </div>
 
             <div className="showcase-caption-bar">
-              <div className="showcase-caption-center" key={activeCategory.id}>
+              <div className="showcase-caption-center">
                 <h3 className="showcase-caption-title">
                   {activeCategory.title}
                 </h3>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { AreaTimelineChart, HorizontalBarChart, InteractiveDonutChart } from '@/components/admin/Charts';
 import Link from 'next/link';
@@ -9,14 +9,23 @@ export default function AdminDashboardPage() {
   const [range, setRange] = useState('30d');
   const [data, setData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const cacheRef = useRef<Record<string, { data: any; timestamp: number }>>({});
 
   const fetchDashboardData = async (selectedRange: string) => {
+    const cached = cacheRef.current[selectedRange];
+    if (cached && Date.now() - cached.timestamp < 60000) {
+      setData(cached.data);
+      setIsLoading(false);
+      return;
+    }
+
     setIsLoading(true);
     try {
       const res = await fetch(`/api/admin/dashboard?range=${selectedRange}`);
       if (res.ok) {
         const json = await res.json();
         if (json.success) {
+          cacheRef.current[selectedRange] = { data: json.data, timestamp: Date.now() };
           setData(json.data);
         }
       }

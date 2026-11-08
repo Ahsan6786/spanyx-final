@@ -480,24 +480,27 @@ export function updateLeadStatus(leadId: string, status: string, notes?: string)
 export function getConsentOverview() {
   const db = getDb();
 
-  const total = (db.prepare(`SELECT COUNT(*) as count FROM consent_records`).get() as any)?.count || 0;
-  const acceptedAll = (db.prepare(`
-    SELECT COUNT(*) as count FROM consent_records WHERE consent_status = 'accepted_all'
-  `).get() as any)?.count || 0;
-  const rejectedOptional = (db.prepare(`
-    SELECT COUNT(*) as count FROM consent_records WHERE consent_status = 'rejected_optional'
-  `).get() as any)?.count || 0;
-  const custom = (db.prepare(`
-    SELECT COUNT(*) as count FROM consent_records WHERE consent_status = 'custom'
-  `).get() as any)?.count || 0;
-  const withdrawn = (db.prepare(`
-    SELECT COUNT(*) as count FROM consent_records WHERE consent_status = 'withdrawn'
-  `).get() as any)?.count || 0;
+  const stats = (db.prepare(`
+    SELECT
+      COUNT(*) as total,
+      SUM(CASE WHEN consent_status = 'accepted_all' THEN 1 ELSE 0 END) as accepted_all,
+      SUM(CASE WHEN consent_status = 'rejected_optional' THEN 1 ELSE 0 END) as rejected_optional,
+      SUM(CASE WHEN consent_status = 'custom' THEN 1 ELSE 0 END) as custom,
+      SUM(CASE WHEN consent_status = 'withdrawn' THEN 1 ELSE 0 END) as withdrawn,
+      SUM(CASE WHEN functional = 1 THEN 1 ELSE 0 END) as functional,
+      SUM(CASE WHEN analytics = 1 THEN 1 ELSE 0 END) as analytics,
+      SUM(CASE WHEN marketing = 1 THEN 1 ELSE 0 END) as marketing
+    FROM consent_records
+  `).get() as any) || {};
 
-  // Category consent counts
-  const functionalConsents = (db.prepare(`SELECT COUNT(*) as count FROM consent_records WHERE functional = 1`).get() as any)?.count || 0;
-  const analyticsConsents = (db.prepare(`SELECT COUNT(*) as count FROM consent_records WHERE analytics = 1`).get() as any)?.count || 0;
-  const marketingConsents = (db.prepare(`SELECT COUNT(*) as count FROM consent_records WHERE marketing = 1`).get() as any)?.count || 0;
+  const total = stats.total || 0;
+  const acceptedAll = stats.accepted_all || 0;
+  const rejectedOptional = stats.rejected_optional || 0;
+  const custom = stats.custom || 0;
+  const withdrawn = stats.withdrawn || 0;
+  const functionalConsents = stats.functional || 0;
+  const analyticsConsents = stats.analytics || 0;
+  const marketingConsents = stats.marketing || 0;
 
   const acceptanceRate = total > 0 ? (((acceptedAll + custom) / total) * 100).toFixed(1) : '0.0';
 
