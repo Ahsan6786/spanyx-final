@@ -1,20 +1,19 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
+import DynamicIslandNav from '@/components/DynamicIslandNav';
 import ContactOverlay, {
   ContactOverlayHandle,
 } from '@/components/ContactOverlay';
-import { CareerPostingItem } from '@/lib/db/queries';
+import { CAREERS_DATA, CareerPostingItem } from '@/data/careersData';
 
 export default function CareersPageContent() {
   const contactOverlayRef = useRef<ContactOverlayHandle>(null);
 
-  const [postings, setPostings] = useState<CareerPostingItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('All Opportunities');
   const [searchQuery, setSearchQuery] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
 
   const handleOpenContact = (buttonEl: HTMLElement) => {
     contactOverlayRef.current?.openFrom(buttonEl);
@@ -28,39 +27,34 @@ export default function CareersPageContent() {
     'Remote Opportunities',
   ];
 
-  const fetchPostings = () => {
-    setIsLoading(true);
-    let url = '/api/careers?';
+  // Hardcoded filtering in memory — 100% independent from admin panel & zero latency
+  const postings = useMemo(() => {
+    let list = CAREERS_DATA;
     if (selectedCategory !== 'All Opportunities') {
-      url += `category=${encodeURIComponent(selectedCategory)}&`;
+      if (selectedCategory === 'Remote Opportunities') {
+        list = list.filter((p) => p.work_mode.toLowerCase().includes('remote'));
+      } else {
+        list = list.filter((p) => p.category === selectedCategory);
+      }
     }
     if (searchQuery.trim()) {
-      url += `search=${encodeURIComponent(searchQuery.trim())}&`;
+      const q = searchQuery.trim().toLowerCase();
+      list = list.filter(
+        (p) =>
+          p.title.toLowerCase().includes(q) ||
+          p.description.toLowerCase().includes(q) ||
+          p.required_skills.toLowerCase().includes(q) ||
+          p.department.toLowerCase().includes(q)
+      );
     }
-
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          setPostings(data.postings || []);
-        }
-      })
-      .catch((err) => {
-        console.error('Failed to load opportunities:', err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    fetchPostings();
+    return list;
   }, [selectedCategory, searchQuery]);
 
   return (
     <div className="careers-page">
-      {/* 1. Dedicated Top Navigation (NO liquid slider, NO spanyx logo, Back button perfectly aligned on left) */}
+      {/* 1. Dedicated Top Navigation with Back Button, Dynamic Island in center, and Contact on right */}
       <header className="careers-top-nav">
+        <DynamicIslandNav onOpenContact={handleOpenContact} />
         <div className="careers-top-nav-inner">
           <Link
             href="/"
@@ -153,23 +147,8 @@ export default function CareersPageContent() {
           ))}
         </div>
 
-        {/* Loading State */}
-        {isLoading && (
-          <div
-            style={{
-              padding: '60px 0',
-              textAlign: 'center',
-              color: '#64748b',
-            }}
-          >
-            <p style={{ fontSize: 14, fontWeight: 600 }}>
-              Loading active opportunities...
-            </p>
-          </div>
-        )}
-
         {/* Empty State */}
-        {!isLoading && postings.length === 0 && (
+        {postings.length === 0 && (
           <div
             style={{
               padding: '64px 24px',
@@ -214,8 +193,8 @@ export default function CareersPageContent() {
           </div>
         )}
 
-        {/* Opportunities List: Black Cards, White Text, No Rounded Corners, All Remote, Formatted Skills */}
-        {!isLoading && postings.length > 0 && (
+        {/* Opportunities List: Hardcoded Black Cards, White Text, No Rounded Corners, All Remote, Formatted Skills */}
+        {postings.length > 0 && (
           <div className="careers-card-grid">
             {postings.map((posting) => (
               <div key={posting.id} className="careers-card">
@@ -231,7 +210,7 @@ export default function CareersPageContent() {
                   {/* Description preview */}
                   <p className="careers-card-desc">{posting.description}</p>
 
-                  {/* Required Skills (Only skills required, no money, no unnecessary specs) */}
+                  {/* Required Skills (Only skills required, clean, formatted) */}
                   {posting.required_skills && (
                     <div className="careers-skills-block">
                       <div className="careers-skills-label">

@@ -6,25 +6,9 @@ import { NextRequest, NextResponse } from 'next/server';
 export const ADMIN_COOKIE_NAME = 'spx_admin_token';
 export const SESSION_EXPIRY_DAYS = 7;
 
-// Rate limiting: max 5 failed attempts in 15 minutes per IP
-const MAX_ATTEMPTS = 5;
-const WINDOW_MINUTES = 15;
-
-export function checkRateLimit(ipAddress: string): { allowed: boolean; remaining: number } {
-  const db = getDb();
-  const windowStart = new Date(Date.now() - WINDOW_MINUTES * 60 * 1000).toISOString();
-
-  const attempts = db.prepare(`
-    SELECT COUNT(*) as failed_count
-    FROM login_attempts
-    WHERE ip_address = ? AND attempted_at >= ? AND success = 0
-  `).get(ipAddress, windowStart) as any;
-
-  const failedCount = attempts?.failed_count || 0;
-  if (failedCount >= MAX_ATTEMPTS) {
-    return { allowed: false, remaining: 0 };
-  }
-  return { allowed: true, remaining: MAX_ATTEMPTS - failedCount };
+// Rate limiting disabled per user configuration
+export function checkRateLimit(_ipAddress: string): { allowed: boolean; remaining: number } {
+  return { allowed: true, remaining: 999 };
 }
 
 export function recordLoginAttempt(ipAddress: string, email: string, success: boolean) {
@@ -42,15 +26,6 @@ export function recordLoginAttempt(ipAddress: string, email: string, success: bo
 }
 
 export async function authenticateAdmin(email: string, password: string, ipAddress: string, userAgent?: string) {
-  const rateLimit = checkRateLimit(ipAddress);
-  if (!rateLimit.allowed) {
-    return {
-      success: false,
-      error: `Too many failed login attempts. Please try again in ${WINDOW_MINUTES} minutes.`,
-      rateLimited: true,
-    };
-  }
-
   const db = getDb();
   const admin = db.prepare(`SELECT * FROM admins WHERE email = ?`).get(email) as any;
 

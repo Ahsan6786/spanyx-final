@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
 import crypto from 'node:crypto';
 import { calculateLeadScore } from '@/lib/analytics/leadScoring';
+import { analyzeLeadWithGemini } from '@/lib/ai/gemini';
 
 export async function POST(req: NextRequest) {
   try {
@@ -21,6 +22,7 @@ export async function POST(req: NextRequest) {
       preferred_contact_method,
       visitor_id,
       session_id,
+      source_page,
     } = body;
 
     if (!name || !email) {
@@ -113,14 +115,16 @@ export async function POST(req: NextRequest) {
     const leadId = 'lead_' + crypto.randomUUID().substring(0, 8);
 
     // 3. Insert lead record
+    const finalSourcePage = source_page ? String(source_page).trim() : firstLandingPage;
+
     db.prepare(`
       INSERT INTO leads (
         id, visitor_id, session_id, name, email, company, website,
         company_size, industry, interested_service, message, phone,
         job_designation, budget, preferred_contact_method, lead_score,
-        status, traffic_source, first_landing_page, campaign_json,
+        status, traffic_source, first_landing_page, source_page, campaign_json,
         created_at, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).run(
       leadId,
       visitor_id || null,
@@ -141,6 +145,7 @@ export async function POST(req: NextRequest) {
       'New',
       trafficSource,
       firstLandingPage,
+      finalSourcePage,
       campaignJson,
       now,
       now
@@ -154,10 +159,15 @@ export async function POST(req: NextRequest) {
       crypto.randomUUID(),
       leadId,
       'form_submission',
-      `Lead voluntarily submitted contact form. Initial lead score: ${scoreResult.score}.`,
+      `Lead voluntarily submitted inquiry from ${finalSourcePage}. Initial lead score: ${scoreResult.score}.`,
       scoreResult.score,
       now
     );
+
+    // 5. Asynchronously trigger initial Gemini AI evaluation & cache
+    analyzeLeadWithGemini(leadId).catch((err) => {
+      console.warn(`Initial background Gemini analysis for ${leadId}:`, err);
+    });
 
     return NextResponse.json({
       success: true,

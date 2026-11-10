@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node scripts/dev-server.mjs",
-    "build": "node -e \"const fs=require('fs'); try{fs.rmSync('.next',{recursive:true,force:true})}catch{}\" && next build",
+    "build": "node scripts/build.mjs",
     "start": "next start",
     "lint": "next lint"
   },
@@ -12,6 +12,7 @@
     "@types/bcryptjs": "^2.4.6",
     "bcryptjs": "^3.0.3",
     "gsap": "^3.15.0",
+    "motion": "^14.12.0",
     "next": "^15.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

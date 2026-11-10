@@ -3,10 +3,11 @@
 import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
+import DynamicIslandNav from '@/components/DynamicIslandNav';
 import ContactOverlay, {
   ContactOverlayHandle,
 } from '@/components/ContactOverlay';
-import { CareerPostingItem } from '@/lib/db/queries';
+import { CareerPostingItem } from '@/data/careersData';
 
 interface CareerDetailPageProps {
   posting: CareerPostingItem;
@@ -118,8 +119,9 @@ export default function CareerDetailPage({ posting }: CareerDetailPageProps) {
 
   return (
     <div className="career-detail-root">
-      {/* 1. TOP NAVIGATION: Clean, Minimal, No Logo, Aligned Back Button */}
+      {/* 1. TOP NAVIGATION: Clean, Minimal, No Logo, Aligned Back Button, Dynamic Island */}
       <header className="careers-top-nav">
+        <DynamicIslandNav onOpenContact={handleOpenContact} />
         <div className="careers-top-nav-inner">
           <Link
             href="/careers"

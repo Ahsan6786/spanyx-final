@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     const result = await authenticateAdmin(email.trim().toLowerCase(), password, clientIp, userAgent);
 
     if (!result.success || !result.token) {
-      return NextResponse.json({ error: result.error }, { status: result.rateLimited ? 429 : 401 });
+      return NextResponse.json({ error: result.error }, { status: 401 });
     }
 
     const response = NextResponse.json({

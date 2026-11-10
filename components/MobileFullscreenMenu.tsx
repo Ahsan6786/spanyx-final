@@ -21,6 +21,7 @@ const MENU_ITEMS: MenuItem[] = [
   { label: 'WORK', href: '/#what-we-create' },
   { label: 'SERVICES', href: '/#what-we-do' },
   { label: 'ABOUT', href: '/about' },
+  { label: 'TEAM', href: '/about#team' },
   { label: 'INDUSTRIES', href: '/industries' },
   { label: 'BLOG', href: '/blog' },
   { label: 'CAREERS', href: '/careers' },
@@ -293,23 +294,6 @@ export default function MobileFullscreenMenu({
               </svg>
               <span>Email</span>
             </a>
-          </div>
-
-          {/* Inquiries */}
-          <div className="spx-mfm-inquiry-row">
-            <span className="spx-mfm-inquiry-label">DIRECT INQUIRIES</span>
-            <a href="mailto:contact@spanyx.in" className="spx-mfm-inquiry-link">
-              <span>contact@spanyx.in</span>
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4 12L12 4M12 4H5.5M12 4V10.5" />
-              </svg>
-            </a>
-          </div>
-
-          {/* Bottom Metas */}
-          <div className="spx-mfm-meta-row">
-            <span>PUNE, INDIA</span>
-            <span>SOFTWARE • AI • ENGINEERING</span>
           </div>
         </div>
       </div>

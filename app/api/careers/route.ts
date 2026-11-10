@@ -1,17 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getCareerPostings } from '@/lib/db/queries';
+import { getHardcodedCareerPostings } from '@/data/careersData';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const category = searchParams.get('category') || undefined;
-    const posting_type = searchParams.get('type') || undefined;
     const search = searchParams.get('search') || undefined;
 
-    const postings = getCareerPostings({
-      status: 'published',
+    const postings = getHardcodedCareerPostings({
       category,
-      posting_type,
       search,
     });
 

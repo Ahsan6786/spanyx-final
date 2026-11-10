@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ContactOverlay, {
   ContactOverlayHandle,
 } from '@/components/ContactOverlay';
+import { assetPreloader } from '@/lib/performance/assetPreloader';
 
 interface IndustryItem {
   id: string;
@@ -99,6 +100,15 @@ const INDUSTRIES: IndustryItem[] = [
 
 export default function IndustriesPageContent() {
   const contactOverlayRef = useRef<ContactOverlayHandle>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const icons = INDUSTRIES.map((ind) => ind.iconSrc);
+      assetPreloader.preload(icons, 'idle');
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleOpenContact = (buttonEl: HTMLElement) => {
     contactOverlayRef.current?.openFrom(buttonEl);

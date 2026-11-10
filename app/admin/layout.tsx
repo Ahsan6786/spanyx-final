@@ -1,26 +1,27 @@
-'use client';
+import type { Metadata } from 'next';
+import AdminLayoutClient from '@/components/admin/AdminLayoutClient';
 
-import React from 'react';
-import { usePathname } from 'next/navigation';
-import { AdminProvider } from '@/components/admin/AdminContext';
-import AdminShell from '@/components/admin/AdminShell';
+export const metadata: Metadata = {
+  title: 'SPANYX Admin Console',
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'none',
+      'max-snippet': -1,
+    },
+  },
+};
 
 export default function RootAdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-
-  // The login page operates without the sidebar/topbar shell
-  if (pathname === '/admin/login') {
-    return <>{children}</>;
-  }
-
-  return (
-    <AdminProvider>
-      <AdminShell>{children}</AdminShell>
-    </AdminProvider>
-  );
+  return <AdminLayoutClient>{children}</AdminLayoutClient>;
 }
-

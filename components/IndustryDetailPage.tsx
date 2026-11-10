@@ -6,6 +6,7 @@ import { IndustryDetail } from '@/data/industriesData';
 import ContactOverlay, {
   ContactOverlayHandle,
 } from '@/components/ContactOverlay';
+import DynamicIslandNav from '@/components/DynamicIslandNav';
 import Footer from '@/components/Footer';
 
 const OPTIMIZED_INDUSTRY_WEBP = new Set([
@@ -131,6 +132,9 @@ export default function IndustryDetailPage({
 
   return (
     <div className="sdp-page apple-page-root">
+      {/* Dynamic Island Navigation Bar */}
+      <DynamicIslandNav onOpenContact={(btn) => contactOverlayRef.current?.openFrom(btn)} />
+
       {/* 1. TOP HEADER: Clean Back Button to /industries on left, Contact on right */}
       <header className="sdp-header">
         <div className="sdp-header-inner">

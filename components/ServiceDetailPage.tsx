@@ -1,12 +1,14 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ShowcaseCategoryDetail } from '@/data/whatWeCreateData';
 import ContactOverlay, {
   ContactOverlayHandle,
 } from '@/components/ContactOverlay';
+import DynamicIslandNav from '@/components/DynamicIslandNav';
 import Footer from '@/components/Footer';
+import { assetPreloader } from '@/lib/performance/assetPreloader';
 
 interface ServiceDetailPageProps {
   category: ShowcaseCategoryDetail;
@@ -17,10 +19,20 @@ export default function ServiceDetailPage({
 }: ServiceDetailPageProps) {
   const contactOverlayRef = useRef<ContactOverlayHandle>(null);
 
-  const handleOpenContact = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    contactOverlayRef.current?.openFrom(e.currentTarget);
+  useEffect(() => {
+    if (category.mobileShowcase?.image) {
+      assetPreloader.preload(category.mobileShowcase.image, 'idle');
+    }
+  }, [category.mobileShowcase?.image]);
+
+  const handleOpenContact = (e?: React.MouseEvent<HTMLElement> | HTMLElement) => {
+    if (e && 'preventDefault' in e) {
+      e.preventDefault();
+      e.stopPropagation();
+      contactOverlayRef.current?.openFrom(e.currentTarget);
+    } else if (e instanceof HTMLElement) {
+      contactOverlayRef.current?.openFrom(e);
+    }
   };
 
   const handleScrollToSection = (
@@ -36,6 +48,9 @@ export default function ServiceDetailPage({
 
   return (
     <div className="sdp-page">
+      {/* Dynamic Island Navigation Bar */}
+      <DynamicIslandNav onOpenContact={(btn) => handleOpenContact(btn)} />
+
       {/* Seamless Top Header: Logo + Back Button on left, Contact on right */}
       <header className="sdp-header">
         <div className="sdp-header-inner">

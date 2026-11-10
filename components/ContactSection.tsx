@@ -51,6 +51,8 @@ export default function ContactSection() {
         if (sCookie) sessionId = sCookie.split('=')[1];
       } catch {}
 
+      const sourcePage = typeof window !== 'undefined' ? (window.location.pathname + window.location.search) : '/';
+
       const res = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -62,6 +64,7 @@ export default function ContactSection() {
           message,
           visitor_id: visitorId,
           session_id: sessionId,
+          source_page: sourcePage,
         }),
       });
 

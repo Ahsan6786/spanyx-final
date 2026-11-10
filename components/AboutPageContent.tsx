@@ -1,14 +1,35 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ContactOverlay, {
   ContactOverlayHandle,
 } from '@/components/ContactOverlay';
+import TeamSection from '@/components/TeamSection';
+import { assetPreloader } from '@/lib/performance/assetPreloader';
 
 export default function AboutPageContent() {
   const contactOverlayRef = useRef<ContactOverlayHandle>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      assetPreloader.preload([
+        '/team/shiv-sutar.webp',
+        '/team/poonam-bhosale.webp',
+        '/team/ahsan-imam-khan.webp',
+        '/partners/trademax.webp',
+        '/partners/ltc.webp',
+        '/partners/rural-immersion.webp',
+        '/partners/revial.webp',
+        '/partners/partner-logo-1.webp',
+        '/partners/logoo.webp',
+        '/carddd.webp',
+      ], 'idle');
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleOpenContact = (buttonEl: HTMLElement) => {
     contactOverlayRef.current?.openFrom(buttonEl);
@@ -82,7 +103,12 @@ export default function AboutPageContent() {
         </section>
 
         {/* ============================================================
-            SECTION 3: OUR CLIENTS
+            SECTION 3: THE MINDS BEHIND SPANYX
+            ============================================================ */}
+        <TeamSection id="team" />
+
+        {/* ============================================================
+            SECTION 4: OUR CLIENTS
             ============================================================ */}
         <section className="about-clients-section" aria-labelledby="about-clients-title">
           <div className="about-container about-clients-container">

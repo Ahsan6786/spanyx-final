@@ -29,7 +29,6 @@ const CLIENT_LOGOS = [
     name: 'Rural Immersion',
     png: '/partners/rural-immersion.png',
     webp: '/partners/rural-immersion.webp',
-    contained: true,
   },
   {
     name: 'Revial',
@@ -43,6 +42,7 @@ const CLIENT_LOGOS = [
   {
     name: 'Client Partner',
     png: '/partners/logoo.jpg',
+    webp: '/partners/logoo.webp',
     contained: true,
   },
 ];
@@ -189,6 +189,8 @@ export default function AboutPreview({ onOpenContact }: AboutPreviewProps) {
                       className={`about-client-logo-img ${client.contained ? 'is-contained' : ''}`}
                       loading="lazy"
                       decoding="async"
+                      width={240}
+                      height={80}
                     />
                   </picture>
                 ) : (
@@ -198,6 +200,8 @@ export default function AboutPreview({ onOpenContact }: AboutPreviewProps) {
                     className={`about-client-logo-img ${client.contained ? 'is-contained' : ''}`}
                     loading="lazy"
                     decoding="async"
+                    width={240}
+                    height={80}
                   />
                 )}
               </div>

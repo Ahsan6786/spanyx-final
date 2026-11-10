@@ -342,6 +342,33 @@ function initSchema(db: DatabaseSync) {
     CREATE INDEX IF NOT EXISTS idx_blogs_published_at ON blogs(published_at);
   `);
 
+  // 17. AI Cache (Persistent Gemini Assessment & Intelligence with Hash Invalidation)
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS ai_cache (
+      id TEXT PRIMARY KEY,
+      scope TEXT NOT NULL,
+      target_id TEXT NOT NULL,
+      data_hash TEXT NOT NULL,
+      content_json TEXT NOT NULL,
+      model_used TEXT NOT NULL,
+      status TEXT DEFAULT 'completed',
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL
+    );
+    CREATE INDEX IF NOT EXISTS idx_ai_cache_scope_target ON ai_cache(scope, target_id);
+    CREATE INDEX IF NOT EXISTS idx_ai_cache_hash ON ai_cache(scope, data_hash);
+  `);
+
+  // Ensure source_page column exists on leads table
+  try {
+    const tableInfo = db.prepare(`PRAGMA table_info(leads)`).all() as Array<{ name: string }>;
+    if (!tableInfo.some((col) => col.name === 'source_page')) {
+      db.exec(`ALTER TABLE leads ADD COLUMN source_page TEXT;`);
+    }
+  } catch (e) {
+    // Column may already exist
+  }
+
   seedInitialData(db);
 }
 

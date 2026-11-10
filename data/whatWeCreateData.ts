@@ -670,7 +670,7 @@ export const SHOWCASE_CATEGORIES: ShowcaseCategoryDetail[] = [
   {
     id: 'trading-fintech-platforms',
     slug: 'trading-fintech-platforms',
-    shortLabel: 'Trading',
+    shortLabel: 'Fintech',
     title: 'Trading & FinTech Platforms',
     subtitle: 'Trading terminals, live market dashboards, and financial platforms',
     image: '/trading.png',

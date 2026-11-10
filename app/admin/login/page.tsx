@@ -159,7 +159,7 @@ export default function AdminLoginPage() {
         </form>
 
         <div style={{ marginTop: 24, textAlign: 'center', fontSize: 12, color: '#94a3b8' }}>
-          Protected by Spanyx Auth with rate limiting &amp; CSRF protection.
+          Protected by Spanyx Auth with bcrypt encryption &amp; CSRF protection.
         </div>
       </div>
     </div>

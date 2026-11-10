@@ -178,6 +178,32 @@ export function getPopularPages(limit: number = 20, filter?: DateFilter) {
   return rows;
 }
 
+// Top 5 Performing Pages with Visitor & Lead Attribution
+export function getTopPerformingPagesWithLeads(limit: number = 5, filter?: DateFilter) {
+  const db = getDb();
+  const pageviewDate = getDateClause('p.entered_at', filter);
+
+  const rows = db.prepare(`
+    SELECT
+      p.page_url,
+      COALESCE(p.page_title, p.page_url) as page_title,
+      COUNT(DISTINCT p.visitor_id) as visitors,
+      COUNT(*) as views,
+      ROUND(AVG(p.time_spent_seconds), 0) as avg_time,
+      COALESCE((
+        SELECT COUNT(*) FROM leads l
+        WHERE l.source_page = p.page_url OR (l.source_page IS NULL AND l.first_landing_page = p.page_url)
+      ), 0) as leads
+    FROM analytics_pageviews p
+    WHERE ${pageviewDate.clause}
+    GROUP BY p.page_url
+    ORDER BY visitors DESC, views DESC
+    LIMIT ?
+  `).all(...pageviewDate.params, limit) as any[];
+
+  return rows;
+}
+
 // Table: Visitors List
 export function getVisitorsList(page: number = 1, pageSize: number = 15, search?: string) {
   const db = getDb();

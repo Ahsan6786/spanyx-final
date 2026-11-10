@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Island Nav</title>
+<style>
+:root{
+  --text:#f5f5f7; --blue:#2997ff;
+  --spring:cubic-bezier(.32,1.25,.45,1); --smooth:cubic-bezier(.4,0,.2,1);
+  --iw:88px;                                     /* width of one nav item */
+  --ew:min(646px,calc(100vw - 24px));            /* snug expanded island width, zero dead space */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Inter,Arial,sans-serif;background:#000;color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.bg{position:fixed;inset:0;z-index:0;background:radial-gradient(60% 50% at 50% 0%,#1d35c4 0%,#1226a0 35%,transparent 75%),radial-gradient(50% 40% at 85% 100%,#3a1fa8 0%,transparent 70%),#050510}
+
+/* ---------- island ---------- */
+.nav-wrap{position:fixed;top:14px;left:0;right:0;display:flex;justify-content:center;z-index:10;padding-top:env(safe-area-inset-top,0px)}
+@media (max-width:768px){.nav-wrap{display:none!important}}
+.island{position:relative;width:128px;height:44px;background:#000;border-radius:22px;overflow:hidden;cursor:pointer;
+  box-shadow:0 0 0 .5px rgba(255,255,255,.14),inset 0 1px 0 rgba(255,255,255,.08),0 10px 30px rgba(0,0,0,.45);
+  transition:width .5s var(--spring),height .5s var(--spring),border-radius .5s var(--spring),box-shadow .4s var(--smooth)}
+.island:hover,.island:focus-within,.island.open{width:var(--ew);height:76px;border-radius:38px;
+  box-shadow:0 0 0 .5px rgba(255,255,255,.2),inset 0 1px 0 rgba(255,255,255,.1),0 30px 80px rgba(0,0,0,.65),0 0 60px rgba(41,151,255,.12)}
+.face{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity .25s var(--smooth),filter .3s var(--smooth),transform .4s var(--smooth)}
+.label{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.island:hover .face,.island:focus-within .face,.island.open .face{opacity:0;filter:blur(8px);transform:scale(.92);pointer-events:none}
+
+/* snug content without extra black space on sides */
+.content{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:0 6px;gap:8px;
+  opacity:0;filter:blur(10px);transform:scale(.95);pointer-events:none;transition:opacity .2s var(--smooth),filter .25s var(--smooth),transform .3s var(--smooth)}
+.island:hover .content,.island:focus-within .content,.island.open .content{opacity:1;filter:blur(0);transform:none;pointer-events:auto;transition-delay:.12s}
+
+/* ---------- liquid glass bar ---------- */
+.stage{position:relative;flex:none}
+.track{position:relative;display:flex;padding:4px;border-radius:999px;background:rgba(255,255,255,.07);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),inset 0 1px 0 rgba(255,255,255,.12);user-select:none;-webkit-user-select:none}
+.track a{width:var(--iw);height:52px;display:flex;align-items:center;justify-content:center;border-radius:24px;
+  color:rgba(255,255,255,.55);text-decoration:none;font-size:14px;font-weight:500;letter-spacing:-.01em;white-space:nowrap;-webkit-tap-highlight-color:transparent;-webkit-user-drag:none;cursor:pointer;transition:color .2s}
+.track a:hover{color:rgba(255,255,255,.85)}
+.track a:focus-visible{outline:2px solid var(--blue);outline-offset:-3px}
+
+/* the lens: a magnified, refracted copy of the bar */
+.lens{position:absolute;left:0;top:0;overflow:hidden;pointer-events:none;will-change:transform;box-shadow:0 6px 18px rgba(0,0,0,.55),0 0 0 .5px rgba(255,255,255,.18)}
+.refr{position:absolute;filter:url(#lgRefr)}
+.clone{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+.lens .track{position:absolute;left:0;top:0;background:#1b1b21;box-shadow:none}
+.lens .track a{color:#fff}
+.lens .track a.sel{color:var(--blue)}
+.gloss{position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(to bottom,rgba(255,255,255,calc(.3*var(--p,0))) 0,transparent 22%,transparent 78%,rgba(255,255,255,calc(.2*var(--p,0))) 100%),rgba(255,255,255,calc(.14*(1 - var(--p,0))));
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.2),inset 0 2px 2px -1px rgba(255,255,255,.65),inset 0 -2px 2px -1px rgba(255,255,255,.3),inset 0 0 18px rgba(255,255,255,.08)}
+
+.cta{flex:none;border:0;cursor:pointer;background:#fff;color:#000;font:600 14px/1 inherit;font-family:inherit;padding:14px 20px;border-radius:999px;transition:transform .2s var(--smooth),background .2s}
+.cta:hover{background:#e8e8ed}.cta:active{transform:scale(.96)}
+.cta:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+main{position:relative;z-index:1;min-height:100%;display:grid;place-items:center;text-align:center;padding:120px 24px 60px}
+h1{font-size:clamp(44px,8vw,96px);font-weight:700;letter-spacing:-.04em;line-height:1.02}
+p{margin-top:18px;font-size:clamp(17px,2.2vw,22px);color:rgba(245,245,247,.72);letter-spacing:-.01em}
+
+@media (max-width:720px){.cta{display:none}.track a{font-size:10.5px}}
+@media (prefers-reduced-motion:reduce){.island,.face,.content{transition-duration:.01s!important;transition-delay:0s!important}}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="lgRefr" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feImage id="lgMap" x="0" y="0" width="100" height="100" result="m"/>
+    <feDisplacementMap id="lgDisp" in="SourceGraphic" in2="m" scale="58" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<div class="nav-wrap">
+  <div class="island" id="island">
+    <div class="face" aria-hidden="true"><span class="label">Menu</span></div>
+    <div class="content">
+      <div class="stage">
+        <nav class="track" id="track" aria-label="Main">
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+          <a href="/what-we-create">Services</a>
+          <a href="/industries">Industries</a>
+          <a href="/careers">Career</a>
+          <a href="/blog">Blog</a>
+        </nav>
+        <div class="lens" id="lens" aria-hidden="true">
+          <div class="refr" id="refr"><div class="clone" id="clone"></div></div>
+          <i class="gloss"></i>
+        </div>
+      </div>
+      <button class="cta" type="button" onclick="if(window.location.protocol==='file:'){window.location.href='http://localhost:9001/#contact'}else{window.location.href='/#contact'}">Contact</button>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div>
+    <h1 id="page">Home</h1>
+    <p>Hover the island, then press and drag the glass.</p>
+  </div>
+</main>
+
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+const island = $('island'), title = $('page');
+const track = $('track'), lens = $('lens'), refr = $('refr'), clone = $('clone'), fe = $('lgMap'), fd = $('lgDisp');
+const items = [...track.querySelectorAll('a')];
+const M = 30, PRESS = 0.3;
+let W, H, Y, active = 0, down = false, startX = 0;
+
+/* touch: tap the island to open or close it */
+island.addEventListener('click', e => { if (!e.target.closest('.track, .cta')) island.classList.toggle('open'); });
+document.addEventListener('click', e => { if (!island.contains(e.target)) island.classList.remove('open'); });
+
+/* magnified copy of the bar that lives inside the lens */
+const copy = track.cloneNode(true);
+copy.removeAttribute('id');
+copy.querySelectorAll('a').forEach(a => { a.removeAttribute('href'); a.tabIndex = -1; });
+clone.appendChild(copy);
+
+/* displacement map: glass bends the image only near the rim, like a convex lens */
+function buildMap() {
+  const w = W + 2*M, h = H + 2*M, r = Math.min(W, H)*.48, bezel = Math.min(W, H)*.27;
+  const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+  const cx = cv.getContext('2d'), img = cx.createImageData(w, h), d = img.data;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const px = x + .5 - w/2, py = y + .5 - h/2;
+    const qx = Math.abs(px) - (W/2 - r), qy = Math.abs(py) - (H/2 - r);
+    const ox = Math.max(qx, 0), oy = Math.max(qy, 0);
+    const depth = -(Math.hypot(ox, oy) + Math.min(Math.max(qx, qy), 0) - r);
+    let dx = 0, dy = 0;
+    if (depth > 0) {
+      const e = Math.min(depth/bezel, 1), rim = Math.pow(1 - e, 2);
+      let nx, ny;
+      if (ox > 0 || oy > 0) { const l = Math.hypot(ox, oy) || 1; nx = ox/l*Math.sign(px); ny = oy/l*Math.sign(py); }
+      else if (qx > qy) { nx = Math.sign(px); ny = 0; } else { nx = 0; ny = Math.sign(py); }
+      dx = Math.max(-1, Math.min(1, nx*rim)); dy = Math.max(-1, Math.min(1, ny*rim));
+    }
+    const i = (y*w + x)*4;
+    d[i] = 128 + dx*127; d[i+1] = 128 + dy*127; d[i+2] = 128; d[i+3] = 255;
+  }
+  cx.putImageData(img, 0, 0);
+  const url = cv.toDataURL();
+  fe.setAttribute('href', url); fe.setAttributeNS('http://www.w3.org/1999/xlink', 'href', url);
+  fe.setAttribute('width', w); fe.setAttribute('height', h);
+}
+
+function measure() {
+  W = items[0].offsetWidth; H = items[0].offsetHeight; Y = items[0].offsetTop;
+  copy.style.width = track.offsetWidth + 'px'; copy.style.height = track.offsetHeight + 'px';
+  lens.style.width = W + 'px'; lens.style.height = H + 'px'; lens.style.borderRadius = Math.min(W, H)*.48 + 'px';
+  refr.style.inset = -M + 'px';
+  buildMap();
+  st.tx = st.x = items[active].offsetLeft; render();
+}
+
+/* spring physics: under-damped, so the glass overshoots and settles */
+const st = { x: 0, v: 0, tx: 0, p: 0, pv: 0, tp: 0, s: 0 };
+const STRETCH = .38, KX = 190, CX = 20, KP = 230, CP = 14;
+let running = false, last = 0;
+
+function render() {
+  const speed = st.s, S = 1 + PRESS*st.p, sx = S*(1 + STRETCH*speed), sy = S*(1 - .1*speed);
+  const pad = items[0].offsetLeft, hw = W*sx/2;
+  const cx = Math.max(pad + hw, Math.min(track.offsetWidth - pad - hw, st.x + W/2));
+  const x = cx - W/2;
+  lens.style.transform = `translate3d(${x}px,${Y}px,0) scale(${sx},${sy})`;
+  const kx = S/sx, ky = S/sy, ccx = x + W/2, ccy = Y + H/2;
+  clone.style.transform = `translate3d(${M + W/2 - kx*ccx}px,${M + H/2 - ky*ccy}px,0) scale(${kx},${ky})`;
+  lens.style.setProperty('--p', Math.max(0, Math.min(1, st.p)).toFixed(3));
+  fd.setAttribute('scale', (8 + 50*Math.max(0, Math.min(1.1, Math.max(st.p, st.s)))).toFixed(1));
+}
+function frame(now) {
+  const dt = Math.min((now - last)/1000, .033); last = now;
+  const n = Math.max(1, Math.ceil(dt*240)), h = dt/n;
+  for (let i = 0; i < n; i++) {
+    st.v += (-(down ? 700 : KX)*(st.x - st.tx) - (down ? 45 : CX)*st.v)*h; st.x += st.v*h;
+    st.pv += (-KP*(st.p - st.tp) - CP*st.pv)*h; st.p += st.pv*h;
+  }
+  st.s += (Math.min(Math.abs(st.v)/1200, 1) - st.s)*Math.min(1, dt*14);
+  render();
+  if (st.s < .01 && Math.abs(st.x - st.tx) < .05 && Math.abs(st.v) < .5 && Math.abs(st.p - st.tp) < .002 && Math.abs(st.pv) < .02) {
+    st.x = st.tx; st.p = st.tp; st.v = st.pv = st.s = 0; render(); running = false; if (!down) setSel(true);
+  } else requestAnimationFrame(frame);
+}
+function kick() { setSel(false); if (!running) { running = true; last = performance.now(); requestAnimationFrame(frame); } }
+
+/* interaction */
+const cItems = [...copy.querySelectorAll('a')];
+const setSel = on => cItems.forEach((a, i) => a.classList.toggle('sel', on && i === active));
+const clampX = x => Math.max(items[0].offsetLeft, Math.min(items[items.length - 1].offsetLeft, x));
+const nearest = x => items.reduce((b, a, i) => Math.abs(a.offsetLeft - x) < Math.abs(items[b].offsetLeft - x) ? i : b, 0);
+const localX = e => e.clientX - track.getBoundingClientRect().left - W/2;
+
+function go(i, shouldNav = false) {
+  active = i; st.tx = items[i].offsetLeft;
+  items.forEach((a, n) => n === i ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
+  if (title) title.textContent = items[i].textContent;
+  kick();
+  if (shouldNav) {
+    const href = items[i].getAttribute('href');
+    if (href) {
+      if (window.location.protocol === 'file:') {
+        window.location.href = 'http://localhost:9001' + href;
+      } else {
+        window.location.href = href;
+      }
+    }
+  }
+}
+items.forEach((a, i) => {
+  a.draggable = false;
+  a.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); go(i, true); });
+});
+
+new ResizeObserver(measure).observe(track);
+document.fonts?.ready.then(measure);
+go(0); measure();
+})();
+</script>
+</body>
+</html>

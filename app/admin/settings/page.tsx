@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 
 export default function UnifiedSettingsPage() {
-  const [activeTab, setActiveTab] = useState<'profile' | 'tracking' | 'retention' | 'security'>('profile');
+  const [activeTab, setActiveTab] = useState<'profile' | 'ai' | 'tracking' | 'retention' | 'security'>('profile');
   const [admin, setAdmin] = useState<any>(null);
 
   // Tracking weights state
@@ -86,6 +86,7 @@ export default function UnifiedSettingsPage() {
         <div className="admin-filter-pills">
           {[
             { id: 'profile', label: 'Admin Profile' },
+            { id: 'ai', label: 'Gemini AI Engine' },
             { id: 'tracking', label: 'Tracking & Scoring' },
             { id: 'retention', label: 'Data Retention' },
             { id: 'security', label: 'Security & Access' },
@@ -101,6 +102,52 @@ export default function UnifiedSettingsPage() {
           ))}
         </div>
       </div>
+
+      {/* Tab: Gemini AI Engine */}
+      {activeTab === 'ai' && (
+        <div className="admin-card" style={{ maxWidth: 700 }}>
+          <div className="admin-card-header">
+            <div>
+              <h3 className="admin-card-title">Google Gemini Intelligence Layer</h3>
+              <p className="admin-card-desc">Production AI synthesis, automated lead assessment, and cost-efficient caching</p>
+            </div>
+            <span className="admin-badge admin-badge-green" style={{ background: 'rgba(16, 185, 129, 0.12)', color: '#059669', fontWeight: 700 }}>
+              Live &amp; Operational
+            </span>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 12, padding: '10px 0', borderBottom: '1px solid var(--admin-border, #f1f5f9)' }}>
+              <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted, #64748b)' }}>Active AI Model</span>
+              <span style={{ fontSize: 13.5, fontWeight: 700, color: '#0066FF', fontFamily: 'monospace' }}>gemini-flash-latest</span>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 12, padding: '10px 0', borderBottom: '1px solid var(--admin-border, #f1f5f9)' }}>
+              <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted, #64748b)' }}>Integration Type</span>
+              <span style={{ fontSize: 13, color: 'var(--text-primary, #0f172a)' }}>Backend-only REST API (Zero Client Credential Exposure)</span>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 12, padding: '10px 0', borderBottom: '1px solid var(--admin-border, #f1f5f9)' }}>
+              <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted, #64748b)' }}>Caching Architecture</span>
+              <span style={{ fontSize: 13, color: 'var(--text-primary, #0f172a)' }}>
+                Persistent SQLite Store (<code>ai_cache</code>) with SHA-256 payload hashing
+              </span>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 12, padding: '10px 0', borderBottom: '1px solid var(--admin-border, #f1f5f9)' }}>
+              <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted, #64748b)' }}>API Cost Optimization</span>
+              <span style={{ fontSize: 13, color: '#059669', fontWeight: 600 }}>
+                ✓ Zero API calls on routine dashboard refreshes; batch lead evaluations only
+              </span>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 12, padding: '10px 0' }}>
+              <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted, #64748b)' }}>Response Format</span>
+              <span style={{ fontSize: 13, color: 'var(--text-primary, #0f172a)' }}>Strict JSON Output Validation</span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Tab 1: Admin Profile */}
       {activeTab === 'profile' && (

@@ -173,6 +173,7 @@ const ContactOverlay = forwardRef<ContactOverlayHandle>(
 
       const visitorId = typeof window !== 'undefined' ? localStorage.getItem('spx_vid') : null;
       const sessionId = typeof window !== 'undefined' ? localStorage.getItem('spx_sid') : null;
+      const sourcePage = typeof window !== 'undefined' ? (window.location.pathname + window.location.search) : '/';
 
       try {
         const res = await fetch('/api/leads', {
@@ -187,6 +188,7 @@ const ContactOverlay = forwardRef<ContactOverlayHandle>(
             message,
             visitor_id: visitorId,
             session_id: sessionId,
+            source_page: sourcePage,
           }),
         });
 

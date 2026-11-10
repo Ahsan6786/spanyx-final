@@ -168,11 +168,19 @@ export default function VisitorTracker() {
     };
   }, [pathname]);
 
-  // 2. Scroll Depth tracking (25%, 50%, 75%, 100%) - RAF throttled
+  // 2. Scroll Depth tracking (25%, 50%, 75%, 100%) - 120fps non-blocking RAF
   useEffect(() => {
     if (isAdmin) return;
 
     let ticking = false;
+    let cachedDocHeight = 0;
+
+    const measureDocHeight = () => {
+      cachedDocHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    };
+    measureDocHeight();
+    window.addEventListener('resize', measureDocHeight, { passive: true });
+
     const handleScroll = () => {
       if (ticking) return;
       ticking = true;
@@ -180,12 +188,10 @@ export default function VisitorTracker() {
       window.requestAnimationFrame(() => {
         ticking = false;
         if (!hasAnalyticsConsent()) return;
+        if (cachedDocHeight <= 1) measureDocHeight();
 
-        const scrollTop = window.scrollY || document.documentElement.scrollTop;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        if (docHeight <= 0) return;
-
-        const scrollPct = Math.min(100, Math.round((scrollTop / docHeight) * 100));
+        const scrollTop = window.scrollY || window.pageYOffset || 0;
+        const scrollPct = Math.min(100, Math.round((scrollTop / cachedDocHeight) * 100));
         if (scrollPct > maxScrollDepthRef.current) {
           maxScrollDepthRef.current = scrollPct;
         }
@@ -215,7 +221,10 @@ export default function VisitorTracker() {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', measureDocHeight);
+    };
   }, [isAdmin]);
 
   // 3. CTA and User Interaction Click Tracking
