@@ -36,8 +36,8 @@ const nextConfig = {
         ],
       },
       {
-        // Cache static images and icons in public/ root and subfolders
-        source: '/:file*\\.(webp|avif|png|jpg|jpeg|svg|ico|woff|woff2)',
+        // Cache static images and icons in public/ with revalidation
+        source: '/:path*.{webp,avif,png,jpg,jpeg,svg,ico,woff,woff2}',
         headers: [
           {
             key: 'Cache-Control',
@@ -46,8 +46,8 @@ const nextConfig = {
         ],
       },
       {
-        // Cache static video assets in root and subfolders
-        source: '/:file*\\.(mp4|webm)',
+        // Cache static video assets
+        source: '/:path*.mp4',
         headers: [
           {
             key: 'Cache-Control',

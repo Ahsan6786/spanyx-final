@@ -28,7 +28,7 @@ function getProcessOnPort(port) {
       return out.split('\n').map((pid) => parseInt(pid, 10)).filter(Boolean);
     }
   } catch {
-    // Port is free or lsof not available
+    // Port is free or lsof returned exit code 1
   }
   return [];
 }
@@ -109,10 +109,9 @@ async function main() {
   const nextBin = path.join(ROOT_DIR, 'node_modules', '.bin', 'next');
   console.log('[Spanyx Build Guardian] Executing Next.js production build...\n');
 
-  const child = spawn('npx', ['next', 'build'], {
+  const child = spawn(nextBin, ['build'], {
     cwd: ROOT_DIR,
     stdio: 'inherit',
-    shell: true,
     env: {
       ...process.env,
       NODE_ENV: 'production',

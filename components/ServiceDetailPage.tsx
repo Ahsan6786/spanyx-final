@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import Link from 'next/link';
 import { ShowcaseCategoryDetail } from '@/data/whatWeCreateData';
 import ContactOverlay, {
@@ -8,7 +8,6 @@ import ContactOverlay, {
 } from '@/components/ContactOverlay';
 import DynamicIslandNav from '@/components/DynamicIslandNav';
 import Footer from '@/components/Footer';
-import { assetPreloader } from '@/lib/performance/assetPreloader';
 
 interface ServiceDetailPageProps {
   category: ShowcaseCategoryDetail;
@@ -18,12 +17,6 @@ export default function ServiceDetailPage({
   category,
 }: ServiceDetailPageProps) {
   const contactOverlayRef = useRef<ContactOverlayHandle>(null);
-
-  useEffect(() => {
-    if (category.mobileShowcase?.image) {
-      assetPreloader.preload(category.mobileShowcase.image, 'idle');
-    }
-  }, [category.mobileShowcase?.image]);
 
   const handleOpenContact = (e?: React.MouseEvent<HTMLElement> | HTMLElement) => {
     if (e && 'preventDefault' in e) {

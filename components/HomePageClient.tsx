@@ -10,7 +10,6 @@ import Footer from '@/components/Footer';
 import ContactOverlay, {
   ContactOverlayHandle,
 } from '@/components/ContactOverlay';
-import BackgroundPreloadOrchestrator from '@/components/performance/BackgroundPreloadOrchestrator';
 
 export default function HomePageClient() {
   const contactOverlayRef = useRef<ContactOverlayHandle>(null);
@@ -68,7 +67,6 @@ export default function HomePageClient() {
       <IndustriesPreview onOpenContact={handleOpenContact} />
       <Footer onOpenContact={handleOpenContact} />
       <ContactOverlay ref={contactOverlayRef} />
-      <BackgroundPreloadOrchestrator />
     </>
   );
 }

@@ -172,7 +172,6 @@ export default function HeroSection({ onOpenContact }: HeroSectionProps) {
                 ref={shortMockupWrapRef}
               >
                 <picture>
-                  <source media="(max-width: 767px)" srcSet="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" />
                   <source srcSet="/span/short-clean.webp" type="image/webp" />
                   <img
                     src="/span/short-clean.png"
@@ -193,7 +192,6 @@ export default function HeroSection({ onOpenContact }: HeroSectionProps) {
                 ref={longMockupWrapRef}
               >
                 <picture>
-                  <source media="(max-width: 767px)" srcSet="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" />
                   <source srcSet="/span/long1.webp" type="image/webp" />
                   <img
                     src="/span/long1.png"

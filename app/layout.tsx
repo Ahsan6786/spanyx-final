@@ -99,13 +99,20 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap"
           rel="stylesheet"
         />
-        {/* Preload strictly the actual Largest Contentful Paint (LCP) hero image on desktop where displayed */}
+        {/* Preload strictly the actual Largest Contentful Paint (LCP) hero image */}
         <link
           rel="preload"
           as="image"
           href="/span/long1.webp"
           type="image/webp"
           media="(min-width: 768px)"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/span/short-clean.webp"
+          type="image/webp"
+          media="(max-width: 767px)"
         />
         <JsonLd schema={[buildOrganizationSchema(), buildWebSiteSchema()]} />
       </head>
