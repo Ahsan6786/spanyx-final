@@ -19,13 +19,16 @@ if (!fs.existsSync(DATA_DIR)) {
 }
 
 function getProcessOnPort(port) {
+  if (process.env.VERCEL || process.env.CI) {
+    return [];
+  }
   try {
-    const out = execSync(`lsof -ti :${port} -sTCP:LISTEN`, { encoding: 'utf8' }).trim();
+    const out = execSync(`lsof -ti :${port} -sTCP:LISTEN`, { encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] }).trim();
     if (out) {
       return out.split('\n').map((pid) => parseInt(pid, 10)).filter(Boolean);
     }
   } catch {
-    // Port is free or lsof returned exit code 1
+    // Port is free or lsof not available
   }
   return [];
 }
@@ -106,9 +109,10 @@ async function main() {
   const nextBin = path.join(ROOT_DIR, 'node_modules', '.bin', 'next');
   console.log('[Spanyx Build Guardian] Executing Next.js production build...\n');
 
-  const child = spawn(nextBin, ['build'], {
+  const child = spawn('npx', ['next', 'build'], {
     cwd: ROOT_DIR,
     stdio: 'inherit',
+    shell: true,
     env: {
       ...process.env,
       NODE_ENV: 'production',
