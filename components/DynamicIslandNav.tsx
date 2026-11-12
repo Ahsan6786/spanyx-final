@@ -415,8 +415,8 @@ export default function DynamicIslandNav({ onOpenContact }: DynamicIslandNavProp
         className={`island-nav-wrap ${isWhatWeCreate ? 'is-services' : ''}`}
         style={{
           '--ew': isWhatWeCreate
-            ? 'min(718px, calc(100vw - 20px))'
-            : 'min(648px, calc(100vw - 20px))',
+            ? 'min(792px, calc(100vw - 24px))'
+            : 'min(716px, calc(100vw - 24px))',
           '--iw': '74px',
         } as React.CSSProperties}
       >
