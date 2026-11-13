@@ -3,27 +3,80 @@ import path from 'node:path';
 import fs from 'node:fs';
 import bcrypt from 'bcryptjs';
 
-// Ensure data directory exists
-const DATA_DIR = path.join(process.cwd(), 'data');
-if (!fs.existsSync(DATA_DIR)) {
-  fs.mkdirSync(DATA_DIR, { recursive: true });
-}
+function getDatabaseFilePath(): string {
+  // If running in Vercel or any serverless/lambda environment with read-only root
+  const isServerless =
+    Boolean(process.env.VERCEL) ||
+    Boolean(process.env.AWS_LAMBDA_FUNCTION_NAME) ||
+    process.env.NODE_ENV === 'production';
 
-const DB_PATH = path.join(DATA_DIR, 'spanyx_intelligence.db');
+  if (isServerless) {
+    const tmpDir = path.join('/tmp', 'spanyx_data');
+    if (!fs.existsSync(tmpDir)) {
+      try {
+        fs.mkdirSync(tmpDir, { recursive: true });
+      } catch {
+        return path.join('/tmp', 'spanyx_intelligence.db');
+      }
+    }
+    const tmpDbPath = path.join(tmpDir, 'spanyx_intelligence.db');
+    // If a bundled seed db exists in process.cwd()/data, copy it over once
+    const seedDbPath = path.join(process.cwd(), 'data', 'spanyx_intelligence.db');
+    if (!fs.existsSync(tmpDbPath) && fs.existsSync(seedDbPath)) {
+      try {
+        fs.copyFileSync(seedDbPath, tmpDbPath);
+      } catch (err) {
+        console.warn('Could not copy bundled seed db to /tmp, will initialize fresh:', err);
+      }
+    }
+    return tmpDbPath;
+  }
+
+  // Local development
+  const localDataDir = path.join(process.cwd(), 'data');
+  if (!fs.existsSync(localDataDir)) {
+    try {
+      fs.mkdirSync(localDataDir, { recursive: true });
+    } catch {
+      return path.join('/tmp', 'spanyx_intelligence.db');
+    }
+  }
+  return path.join(localDataDir, 'spanyx_intelligence.db');
+}
 
 let _db: DatabaseSync | null = null;
 let _schemaInitialized = false;
 
 export function getDb(): DatabaseSync {
   if (!_db) {
-    _db = new DatabaseSync(DB_PATH);
+    const dbPath = getDatabaseFilePath();
+    try {
+      _db = new DatabaseSync(dbPath);
+    } catch (openErr) {
+      console.warn(`Failed to open SQLite at ${dbPath}, falling back to in-memory:`, openErr);
+      _db = new DatabaseSync(':memory:');
+    }
+
     // Set busy timeout FIRST to prevent "database is locked" errors during concurrent worker access
-    _db.exec('PRAGMA busy_timeout = 10000;');
-    _db.exec('PRAGMA journal_mode = WAL;');
-    _db.exec('PRAGMA foreign_keys = ON;');
-    _db.exec('PRAGMA synchronous = NORMAL;');
+    try {
+      _db.exec('PRAGMA busy_timeout = 10000;');
+      try {
+        _db.exec('PRAGMA journal_mode = WAL;');
+      } catch {
+        _db.exec('PRAGMA journal_mode = DELETE;');
+      }
+      _db.exec('PRAGMA foreign_keys = ON;');
+      _db.exec('PRAGMA synchronous = NORMAL;');
+    } catch (pragmaErr) {
+      console.warn('SQLite PRAGMA setup warning:', pragmaErr);
+    }
+
     if (!_schemaInitialized) {
-      initSchema(_db);
+      try {
+        initSchema(_db);
+      } catch (schemaErr) {
+        console.error('Failed to initialize SQLite schema:', schemaErr);
+      }
       _schemaInitialized = true;
     }
   }
