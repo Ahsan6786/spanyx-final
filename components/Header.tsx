@@ -37,13 +37,16 @@ export default function Header({
     onOpenContact(e.currentTarget);
   };
 
+  const brandGroupClass = ['header-brand-group', !shouldShowLogo && 'has-no-logo'].filter(Boolean).join(' ');
+  const mobileMenuBtnClass = ['header-menu-btn', isMobileNavOpen && 'is-active'].filter(Boolean).join(' ');
+
   return (
     <header className="site-header" id="header">
-      {/* Dynamic Island Navigation on all public pages, strictly excluded from admin panel */}
-      {!isAdminPage && <DynamicIslandNav onOpenContact={onOpenContact} />}
+      {/* Dynamic Island Navigation on all public pages */}
+      <DynamicIslandNav onOpenContact={onOpenContact} />
 
       <div className="header-inner">
-        <div className={`header-brand-group ${!shouldShowLogo ? 'has-no-logo' : ''}`}>
+        <div className={brandGroupClass}>
           {shouldShowLogo && (
             <a href="/" className="brand-link" aria-label="Spanyx Homepage">
               <picture>
@@ -90,7 +93,7 @@ export default function Header({
           {/* Mobile Sidebar / Hamburger Button */}
           <button
             type="button"
-            className={`header-menu-btn ${isMobileNavOpen ? 'is-active' : ''}`}
+            className={mobileMenuBtnClass}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();

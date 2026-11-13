@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 
 interface DynamicIslandNavProps {
@@ -11,7 +11,7 @@ const DEFAULT_NAV_ITEMS = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },
   { label: 'Team', href: '/about#team' },
-  { label: 'Services', href: '/what-we-create' },
+  { label: 'Services', href: '/services' },
   { label: 'Industries', href: '/industries' },
   { label: 'Career', href: '/careers' },
   { label: 'Blog', href: '/blog' },
@@ -44,8 +44,11 @@ export default function DynamicIslandNav({ onOpenContact }: DynamicIslandNavProp
   const isLandingPage = pathname === '/';
   const navItems = isWhatWeCreate ? WHAT_WE_CREATE_NAV_ITEMS : DEFAULT_NAV_ITEMS;
 
-  // Initial load welcome animation state for landing page
-  const [isWelcome, setIsWelcome] = React.useState(false);
+  // Initial load welcome animation and smooth menu open/shrink sequence for landing page
+  const [isWelcome, setIsWelcome] = useState(false);
+  const [isIntroOpen, setIsIntroOpen] = useState(false);
+  const [isUserOpen, setIsUserOpen] = useState(false);
+  const hasUserInteracted = useRef(false);
 
   useEffect(() => {
     if (!isLandingPage) return;
@@ -57,19 +60,47 @@ export default function DynamicIslandNav({ onOpenContact }: DynamicIslandNavProp
       return;
     }
 
-    const startTimer = setTimeout(() => {
+    // Phase 1: Smoothly expand to show "WELCOME TO SPANYX"
+    const t1 = setTimeout(() => {
+      if (hasUserInteracted.current) return;
       setIsWelcome(true);
-    }, 200);
+    }, 400);
 
-    const endTimer = setTimeout(() => {
+    // Phase 2: Smoothly expand to the full open menu bar
+    const t2 = setTimeout(() => {
+      if (hasUserInteracted.current) return;
       setIsWelcome(false);
-    }, 2700);
+      setIsIntroOpen(true);
+    }, 2000);
+
+    // Phase 3: Smoothly shrink back down to the compact "Menu" pill
+    const t3 = setTimeout(() => {
+      if (hasUserInteracted.current) return;
+      setIsIntroOpen(false);
+    }, 4400);
 
     return () => {
-      clearTimeout(startTimer);
-      clearTimeout(endTimer);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
     };
   }, [isLandingPage]);
+
+  // Re-measure liquid glass track lens when intro or user menu opens
+  useEffect(() => {
+    if (isIntroOpen || isUserOpen) {
+      const t1 = setTimeout(() => {
+        window.dispatchEvent(new Event('resize'));
+      }, 80);
+      const t2 = setTimeout(() => {
+        window.dispatchEvent(new Event('resize'));
+      }, 450);
+      return () => {
+        clearTimeout(t1);
+        clearTimeout(t2);
+      };
+    }
+  }, [isIntroOpen, isUserOpen]);
 
   // Determine contextual wording for collapsed menu button face
   let collapsedLabel = 'Menu';
@@ -336,13 +367,16 @@ export default function DynamicIslandNav({ onOpenContact }: DynamicIslandNavProp
     const handleIslandClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
       if (!target?.closest('.track, .cta')) {
-        island.classList.toggle('open');
+        hasUserInteracted.current = true;
+        setIsWelcome(false);
+        setIsIntroOpen(false);
+        setIsUserOpen((prev) => !prev);
       }
     };
 
     const handleDocClick = (e: MouseEvent) => {
-      if (!island.contains(e.target as Node)) {
-        island.classList.remove('open');
+      if (islandRef.current && !islandRef.current.contains(e.target as Node)) {
+        setIsUserOpen(false);
       }
     };
 
@@ -372,13 +406,34 @@ export default function DynamicIslandNav({ onOpenContact }: DynamicIslandNavProp
     };
   }, [router, pathname, navItems, isWhatWeCreate]);
 
+  const islandWrapClass = [
+    'island-nav-wrap',
+    isWhatWeCreate && 'is-services',
+  ].filter(Boolean).join(' ');
+
+  const islandClass = [
+    'island',
+    isWelcome && 'is-welcome',
+    (isIntroOpen || isUserOpen) && 'open',
+    isIntroOpen && 'is-intro-open',
+  ].filter(Boolean).join(' ');
+
+  const labelClass = [
+    'label',
+    isWelcome && 'is-welcome-hidden',
+  ].filter(Boolean).join(' ');
+
+  const welcomeLabelClass = [
+    'welcome-label',
+    isWelcome && 'is-welcome-visible',
+  ].filter(Boolean).join(' ');
+
   return (
-    <>
-      {/* SVG Optical Displacement Filter for Real-time Glass Refraction */}
+    <div className={islandWrapClass}>
       <svg
         width="0"
         height="0"
-        style={{ position: 'absolute' }}
+        style={{ position: 'absolute', pointerEvents: 'none' }}
         aria-hidden="true"
       >
         <filter
@@ -410,65 +465,66 @@ export default function DynamicIslandNav({ onOpenContact }: DynamicIslandNavProp
         </filter>
       </svg>
 
-      {/* Dynamic Island Navigation Bar */}
       <div
-        className={`island-nav-wrap ${isWhatWeCreate ? 'is-services' : ''}`}
-        style={{
-          '--ew': isWhatWeCreate
-            ? 'min(792px, calc(100vw - 24px))'
-            : 'min(716px, calc(100vw - 24px))',
-          '--iw': '74px',
-        } as React.CSSProperties}
+        className={islandClass}
+        id="island"
+        ref={islandRef}
+        onMouseEnter={() => {
+          hasUserInteracted.current = true;
+          if (isWelcome) setIsWelcome(false);
+          if (isIntroOpen) setIsIntroOpen(false);
+        }}
       >
-        <div
-          className={`island ${isWelcome ? 'is-welcome' : ''}`}
-          id="island"
-          ref={islandRef}
-          onMouseEnter={() => {
-            if (isWelcome) setIsWelcome(false);
-          }}
-        >
-          <div className="face" aria-hidden="true">
-            <span className={`label ${isWelcome ? 'is-welcome-hidden' : ''}`}>
-              {collapsedLabel}
-            </span>
-            {isLandingPage && (
-              <span className={`welcome-label ${isWelcome ? 'is-welcome-visible' : ''}`}>
-                WELCOME TO SPANYX
-              </span>
-            )}
-          </div>
-          <div className="content">
-            <div className="stage">
-              <nav
-                className="track"
-                id="track"
-                aria-label={isWhatWeCreate ? 'Services Navigation' : 'Main Navigation'}
-              >
-                {navItems.map((item) => (
-                  <a key={item.label} href={item.href}>
-                    {item.label}
-                  </a>
-                ))}
-              </nav>
-              <div className="lens" id="lens" ref={lensRef} aria-hidden="true">
-                <div className="refr" id="refr" ref={refrRef}>
-                  <div className="clone" id="clone" ref={cloneRef}></div>
-                </div>
-                <i className="gloss"></i>
-              </div>
-            </div>
-            <button
-              className="cta"
-              type="button"
-              onClick={handleContactClick}
-              title="Open Contact Dialog"
+        <div className="face" aria-hidden="true">
+          <span className={labelClass}>{collapsedLabel}</span>
+          <span className={welcomeLabelClass}>WELCOME TO SPANYX</span>
+        </div>
+
+        <div className="content">
+          <div className="stage">
+            <nav
+              className="track"
+              id="track"
+              aria-label={
+                isWhatWeCreate
+                  ? 'Services Navigation'
+                  : 'Main Navigation'
+              }
             >
-              Contact
-            </button>
+              {navItems.map((item) => (
+                <a key={item.label} href={item.href}>
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+
+            <div
+              className="lens"
+              id="lens"
+              ref={lensRef}
+              aria-hidden="true"
+            >
+              <div className="refr" id="refr" ref={refrRef}>
+                <div
+                  className="clone"
+                  id="clone"
+                  ref={cloneRef}
+                />
+              </div>
+              <i className="gloss" />
+            </div>
           </div>
+
+          <button
+            className="cta"
+            type="button"
+            onClick={handleContactClick}
+            title="Open Contact Dialog"
+          >
+            Contact
+          </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }

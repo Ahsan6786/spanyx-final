@@ -275,9 +275,7 @@ export default function StackedShowcase({
                     <button
                       key={cat.id}
                       type="button"
-                      className={`showcase-cat-btn ${
-                        isActive ? 'is-active' : ''
-                      }`}
+                      className={['showcase-cat-btn', isActive && 'is-active'].filter(Boolean).join(' ')}
                       onClick={() => scrollToCard(idx)}
                     >
                       <span className="showcase-cat-label">{cat.title}</span>

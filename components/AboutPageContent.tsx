@@ -39,8 +39,7 @@ export default function AboutPageContent() {
                 About us
               </h1>
               <p className="about-hero-subtitle">
-                Our mission is to bridge the gap between complexity and efficiency,
-                ensuring every organization can thrive in a digital-first world.
+                We engineer custom software, enterprise platforms, and digital systems built for stability, clarity, and real-world performance.
               </p>
             </div>
           </div>
@@ -55,27 +54,18 @@ export default function AboutPageContent() {
             <div className="about-story-editorial">
               <div className="about-story-heading-wrap">
                 <h2 id="about-story-title" className="about-story-title">
-                  Making software better for everyone
+                  Engineering dependable software for real operational needs
                 </h2>
               </div>
               <div className="about-story-body">
                 <p className="about-story-paragraph">
-                  Spanyx is an independent technology company focused on
-                  creating dependable software and digital experiences. We work
-                  with educational institutions, organizations, and businesses
-                  to turn complex requirements into practical, well-engineered
-                  solutions.
+                  Spanyx is an independent software engineering studio. We partner with enterprises, growing businesses, and academic institutions to build software that handles real operational complexity. Rather than relying on off-the-shelf templates or fragile integrations, we engineer custom systems designed around how our clients actually work.
                 </p>
                 <p className="about-story-paragraph">
-                  From custom web applications and enterprise management
-                  systems to modern digital platforms, we combine thoughtful
-                  design, innovative thinking, and strong engineering to solve
-                  real-world challenges.
+                  Our work spans enterprise management portals, institutional platforms, fintech dashboards, custom web applications, and automated AI workflows. We design every system with clear interfaces, maintainable architectures, and resilient backends that can scale predictably as your organization grows.
                 </p>
                 <p className="about-story-paragraph">
-                  Our philosophy is simple: understand the problem, build the
-                  right solution, and create technology that delivers lasting
-                  value.
+                  We approach every project with practical engineering discipline. From initial architecture and data modeling to deployment and post-launch maintenance, we write clean, well-tested code, communicate directly with our clients, and deliver dependable software without unnecessary overhead.
                 </p>
               </div>
             </div>
@@ -180,23 +170,23 @@ export default function AboutPageContent() {
             {/* Impact Scale Numbers Strip */}
             <div className="about-clients-stats-strip">
               <div className="about-client-stat">
-                <span className="about-client-stat-num">50+</span>
-                <span className="about-client-stat-label">Production Deployments</span>
-              </div>
-              <div className="about-client-stat-divider" aria-hidden="true"></div>
-              <div className="about-client-stat">
-                <span className="about-client-stat-num">99.9%</span>
-                <span className="about-client-stat-label">Platform Uptime SLA</span>
-              </div>
-              <div className="about-client-stat-divider" aria-hidden="true"></div>
-              <div className="about-client-stat">
-                <span className="about-client-stat-num">10k+</span>
-                <span className="about-client-stat-label">Daily Active Users</span>
+                <span className="about-client-stat-num">Full</span>
+                <span className="about-client-stat-label">Lifecycle Delivery</span>
               </div>
               <div className="about-client-stat-divider" aria-hidden="true"></div>
               <div className="about-client-stat">
                 <span className="about-client-stat-num">100%</span>
-                <span className="about-client-stat-label">On-Time Delivery</span>
+                <span className="about-client-stat-label">Code &amp; IP Ownership</span>
+              </div>
+              <div className="about-client-stat-divider" aria-hidden="true"></div>
+              <div className="about-client-stat">
+                <span className="about-client-stat-num">Custom</span>
+                <span className="about-client-stat-label">Modular Architecture</span>
+              </div>
+              <div className="about-client-stat-divider" aria-hidden="true"></div>
+              <div className="about-client-stat">
+                <span className="about-client-stat-num">Direct</span>
+                <span className="about-client-stat-label">Engineer Collaboration</span>
               </div>
             </div>
           </div>
@@ -211,13 +201,12 @@ export default function AboutPageContent() {
             <div className="about-values-header">
               <h2 id="about-values-title" className="about-values-title">Our core values</h2>
               <p className="about-values-subtitle">
-                We believe in forging strong relationships with our customers,
-                partners, and employees, based on trust and mutual respect.
+                The engineering principles and collaborative standards that guide how we build software and partner with clients.
               </p>
             </div>
 
             <div className="about-values-grid">
-              {/* Card 1: Collaboration */}
+              {/* Card 1: Direct Collaboration */}
               <div className="about-value-card">
                 <div className="about-value-card-top">
                   <div className="about-value-icon-box">
@@ -239,29 +228,14 @@ export default function AboutPageContent() {
                   <span className="about-value-index">01</span>
                 </div>
                 <div className="about-value-card-content">
-                  <h3 className="about-value-card-title">Collaboration</h3>
+                  <h3 className="about-value-card-title">Direct Collaboration</h3>
                   <p className="about-value-card-statement">
-                    We build with purpose, quality, and long-term impact through open teamwork.
+                    We work closely with your team throughout development, maintaining clear milestones and transparent communication from day one.
                   </p>
-                </div>
-                <div className="about-value-card-footer">
-                  <span className="about-value-card-arrow" aria-hidden="true">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <line x1="7" y1="17" x2="17" y2="7" />
-                      <polyline points="7 7 17 7 17 17" />
-                    </svg>
-                  </span>
                 </div>
               </div>
 
-              {/* Card 2: Insightful analytics */}
+              {/* Card 2: Operational Clarity */}
               <div className="about-value-card">
                 <div className="about-value-card-top">
                   <div className="about-value-icon-box">
@@ -282,29 +256,14 @@ export default function AboutPageContent() {
                   <span className="about-value-index">02</span>
                 </div>
                 <div className="about-value-card-content">
-                  <h3 className="about-value-card-title">Insightful analytics</h3>
+                  <h3 className="about-value-card-title">Operational Clarity</h3>
                   <p className="about-value-card-statement">
-                    Continuously evolving to meet challenges and uncover key opportunities.
+                    We turn complex operational requirements and fragmented data into intuitive interfaces and dependable digital workflows.
                   </p>
-                </div>
-                <div className="about-value-card-footer">
-                  <span className="about-value-card-arrow" aria-hidden="true">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <line x1="7" y1="17" x2="17" y2="7" />
-                      <polyline points="7 7 17 7 17 17" />
-                    </svg>
-                  </span>
                 </div>
               </div>
 
-              {/* Card 3: Seamless integration */}
+              {/* Card 3: Seamless Integration */}
               <div className="about-value-card">
                 <div className="about-value-card-top">
                   <div className="about-value-icon-box">
@@ -325,29 +284,14 @@ export default function AboutPageContent() {
                   <span className="about-value-index">03</span>
                 </div>
                 <div className="about-value-card-content">
-                  <h3 className="about-value-card-title">Seamless integration</h3>
+                  <h3 className="about-value-card-title">Seamless Integration</h3>
                   <p className="about-value-card-statement">
-                    Committing to the highest engineering standards across every product.
+                    We build software that connects reliably with your existing tools, databases, and third-party APIs without workflow disruption.
                   </p>
-                </div>
-                <div className="about-value-card-footer">
-                  <span className="about-value-card-arrow" aria-hidden="true">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <line x1="7" y1="17" x2="17" y2="7" />
-                      <polyline points="7 7 17 7 17 17" />
-                    </svg>
-                  </span>
                 </div>
               </div>
 
-              {/* Card 4: Effortless boards */}
+              {/* Card 4: Disciplined Engineering */}
               <div className="about-value-card">
                 <div className="about-value-card-top">
                   <div className="about-value-icon-box">
@@ -368,25 +312,10 @@ export default function AboutPageContent() {
                   <span className="about-value-index">04</span>
                 </div>
                 <div className="about-value-card-content">
-                  <h3 className="about-value-card-title">Effortless boards</h3>
+                  <h3 className="about-value-card-title">Disciplined Engineering</h3>
                   <p className="about-value-card-statement">
-                    Focusing on long-term impact and positive change through intuitive tooling.
+                    We write clean, well-tested code backed by resilient architecture, ensuring long-term maintainability, security, and uptime.
                   </p>
-                </div>
-                <div className="about-value-card-footer">
-                  <span className="about-value-card-arrow" aria-hidden="true">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <line x1="7" y1="17" x2="17" y2="7" />
-                      <polyline points="7 7 17 7 17 17" />
-                    </svg>
-                  </span>
                 </div>
               </div>
             </div>

@@ -19,7 +19,7 @@ interface MenuItem {
 const MENU_ITEMS: MenuItem[] = [
   { label: 'HOME', href: '/' },
   { label: 'WORK', href: '/#what-we-create' },
-  { label: 'SERVICES', href: '/#what-we-do' },
+  { label: 'SERVICES', href: '/services' },
   { label: 'ABOUT', href: '/about' },
   { label: 'TEAM', href: '/about#team' },
   { label: 'INDUSTRIES', href: '/industries' },

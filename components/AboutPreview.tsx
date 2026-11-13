@@ -8,10 +8,10 @@ interface AboutPreviewProps {
 }
 
 const STATS = [
-  { value: '50+', label: 'Production Deployments' },
-  { value: '99.9%', label: 'Platform Uptime SLA' },
-  { value: '10k+', label: 'Daily Active Users' },
-  { value: '100%', label: 'On-Time Delivery' },
+  { value: 'Full', label: 'Lifecycle Delivery' },
+  { value: '100%', label: 'Code & IP Ownership' },
+  { value: 'Custom', label: 'Modular Architecture' },
+  { value: 'Direct', label: 'Engineer Collaboration' },
 ];
 
 const CLIENT_LOGOS = [
@@ -49,8 +49,8 @@ const CLIENT_LOGOS = [
 
 const VALUES = [
   {
-    title: 'Collaboration',
-    statement: 'We work closely with you every step of the way to build what you actually need.',
+    title: 'Direct Collaboration',
+    statement: 'We work closely with your team throughout development, maintaining clear milestones and transparent communication from day one.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
@@ -61,8 +61,8 @@ const VALUES = [
     ),
   },
   {
-    title: 'Clear Analytics',
-    statement: 'Simple dashboards and clear numbers so you always know how your business is doing.',
+    title: 'Operational Clarity',
+    statement: 'We turn complex operational requirements and fragmented data into intuitive interfaces and dependable digital workflows.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <line x1="18" y1="20" x2="18" y2="10" />
@@ -72,8 +72,8 @@ const VALUES = [
     ),
   },
   {
-    title: 'Clean Engineering',
-    statement: 'Fast, secure, and reliable code that runs smoothly without breaking.',
+    title: 'Seamless Integration',
+    statement: 'We build software that connects reliably with your existing tools, databases, and third-party APIs without workflow disruption.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <polygon points="12 2 2 7 12 12 22 7 12 2" />
@@ -83,8 +83,8 @@ const VALUES = [
     ),
   },
   {
-    title: 'Easy to Use',
-    statement: 'Simple screens and intuitive tools that anyone on your team can use easily.',
+    title: 'Disciplined Engineering',
+    statement: 'We write clean, well-tested code backed by resilient architecture, ensuring long-term maintainability, security, and uptime.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
@@ -105,14 +105,14 @@ export default function AboutPreview({ onOpenContact }: AboutPreviewProps) {
             About Us
           </h2>
           <p className="landing-section-lead">
-            Simple, reliable software for your team
+            Practical software engineering for ambitious organizations
           </p>
         </div>
 
         {/* Centered Editorial Copy + CTA */}
         <div className="about-preview-centered-copy">
           <p className="about-preview-lead-desc">
-            We build custom software, web platforms, and mobile apps for businesses and universities. We focus on clean code, simple screens, and delivering on time.
+            Spanyx is an independent software studio. We design, build, and maintain custom web applications, enterprise management platforms, and AI-powered systems that solve operational challenges and scale reliably.
           </p>
 
           <div className="about-preview-action-row">
@@ -148,22 +148,15 @@ export default function AboutPreview({ onOpenContact }: AboutPreviewProps) {
       {/* 4 Core Value Pillars (Full actual size as in About Us page: max-width 1400px) */}
       <div className="about-values-container about-preview-values-container">
         <div className="about-values-grid">
-          {VALUES.map((val) => (
+          {VALUES.map((val, idx) => (
             <div key={val.title} className="about-value-card">
               <div className="about-value-card-top">
                 <div className="about-value-icon-box">{val.icon}</div>
+                <span className="about-value-index">{String(idx + 1).padStart(2, '0')}</span>
               </div>
               <div className="about-value-card-content">
                 <h3 className="about-value-card-title">{val.title}</h3>
                 <p className="about-value-card-statement">{val.statement}</p>
-              </div>
-              <div className="about-value-card-footer">
-                <span className="about-value-card-arrow" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="7" y1="17" x2="17" y2="7" />
-                    <polyline points="7 7 17 7 17 17" />
-                  </svg>
-                </span>
               </div>
             </div>
           ))}
@@ -186,7 +179,7 @@ export default function AboutPreview({ onOpenContact }: AboutPreviewProps) {
                     <img
                       src={client.png}
                       alt={client.name}
-                      className={`about-client-logo-img ${client.contained ? 'is-contained' : ''}`}
+                      className={['about-client-logo-img', client.contained && 'is-contained'].filter(Boolean).join(' ')}
                       loading="lazy"
                       decoding="async"
                       width={240}
@@ -197,7 +190,7 @@ export default function AboutPreview({ onOpenContact }: AboutPreviewProps) {
                   <img
                     src={client.webp || client.png}
                     alt={client.name}
-                    className={`about-client-logo-img ${client.contained ? 'is-contained' : ''}`}
+                    className={['about-client-logo-img', client.contained && 'is-contained'].filter(Boolean).join(' ')}
                     loading="lazy"
                     decoding="async"
                     width={240}

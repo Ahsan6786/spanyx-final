@@ -214,7 +214,7 @@ main,
   --spring: cubic-bezier(.32, 1.25, .45, 1);
   --smooth: cubic-bezier(.4, 0, .2, 1);
   --iw: 74px;                                      /* width of one nav item */
-  --ew: min(716px, calc(100vw - 24px));            /* perfectly proportioned expanded island width with zero clipping */
+  --ew: min(772px, calc(100vw - 24px));            /* perfectly proportioned expanded island width with zero clipping */
 
   position: fixed;
   top: 14px;
@@ -225,6 +225,10 @@ main,
   z-index: 250;
   padding-top: env(safe-area-inset-top, 0px);
   pointer-events: none;
+}
+
+.island-nav-wrap.is-services {
+  --ew: min(832px, calc(100vw - 24px));
 }
 
 /* Completely hide the menu button / dynamic island on mobile view */
@@ -5044,14 +5048,12 @@ body.contact-open {
   position: relative;
   background: linear-gradient(180deg, rgba(5, 12, 28, 0.28) 0%, rgba(5, 12, 28, 0.58) 100%),
               url('/carddd.webp') center center / cover no-repeat;
-  border-radius: 24px;
+  border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow: 0 14px 40px rgba(6, 14, 36, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.24);
-  padding: clamp(30px, 2.8vw, 38px) clamp(24px, 2.4vw, 32px);
+  padding: clamp(24px, 2.2vw, 28px) clamp(22px, 2vw, 26px);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 320px;
   box-sizing: border-box;
   overflow: hidden;
   transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
@@ -5069,15 +5071,15 @@ body.contact-open {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   position: relative;
   z-index: 2;
 }
 
 .about-value-icon-box {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.16);
   color: #ffffff;
   display: flex;
@@ -5088,8 +5090,8 @@ body.contact-open {
 }
 
 .about-value-icon-box svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
 }
 
 .about-value-card:hover .about-value-icon-box {
@@ -5115,17 +5117,17 @@ body.contact-open {
 }
 
 .about-value-card-title {
-  font-size: clamp(20px, 1.45vw, 23px);
+  font-size: clamp(19px, 1.35vw, 21.5px);
   font-weight: 700;
   color: #ffffff;
   letter-spacing: -0.025em;
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   line-height: 1.25;
 }
 
 .about-value-card-statement {
-  font-size: clamp(14.5px, 1.05vw, 15.5px);
-  line-height: 1.62;
+  font-size: clamp(14px, 0.98vw, 15px);
+  line-height: 1.6;
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
 }
@@ -6314,107 +6316,223 @@ body.is-page-navigating .legal-page {
 }
 
 /* =========================================================================
-   INDUSTRY DETAIL PAGE ENHANCEMENTS (Clean, Premium, High Contrast)
+   CENTRAL SERVICES LISTING PAGE (/services)
+   Minimal, premium Apple aesthetic matching SPANYX design system
    ========================================================================= */
-
-/* C. Core Capabilities & Architecture */
-.ind-capabilities-section {
-  padding: clamp(72px, 8vw, 112px) 0;
+.services-page {
   background: #ffffff;
-  border-top: 1px solid rgba(6, 14, 36, 0.06);
-}
-
-.ind-section-header {
-  text-align: center;
-  max-width: 740px;
-  margin: 0 auto clamp(40px, 5vw, 64px);
-}
-
-.ind-section-title {
-  font-size: clamp(32px, 3.6vw, 46px);
-  font-weight: 700;
-  line-height: 1.18;
-  letter-spacing: -0.035em;
   color: #060e24;
-  margin: 0 0 14px;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
 }
 
-.ind-section-subtitle {
-  font-size: clamp(15px, 1.25vw, 17px);
-  line-height: 1.62;
-  color: #64748b;
+.services-main {
+  position: relative;
+  z-index: 1;
+}
+
+.services-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 clamp(24px, 4vw, 56px);
+}
+
+/* Hero Section */
+.services-hero-section {
+  padding: clamp(96px, 10vw, 136px) 0 clamp(44px, 5vw, 64px);
+  text-align: center;
+  background: #ffffff;
+}
+
+.services-hero-header {
+  max-width: 860px;
   margin: 0 auto;
 }
 
-.ind-capabilities-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(20px, 2.4vw, 32px);
+.services-hero-title {
+  font-size: clamp(38px, 4.8vw, 62px);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.038em;
+  color: #060e24;
+  margin: 0 0 18px;
 }
 
-.ind-capability-card {
-  background: linear-gradient(180deg, #ffffff 0%, #fafbff 100%);
-  border: 1px solid rgba(6, 14, 36, 0.08);
-  border-radius: 22px;
-  padding: clamp(30px, 3.2vw, 40px) clamp(24px, 2.6vw, 32px);
+.services-hero-subtitle {
+  font-size: clamp(16px, 1.25vw, 19px);
+  line-height: 1.65;
+  color: #64748b;
+  margin: 0 auto;
+  max-width: 680px;
+}
+
+/* Services Grid Section */
+.services-grid-section {
+  padding: 0 0 clamp(88px, 10vw, 144px);
+  background: #ffffff;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: clamp(40px, 4.5vw, 68px);
+  row-gap: clamp(54px, 6vw, 84px);
+}
+
+/* Center 7th service card when alone in 3-column row */
+.services-grid > .service-card:last-child:nth-child(3n + 1) {
+  grid-column: 2;
+}
+
+.service-card {
+  background: #ffffff;
+  border: 1px solid rgba(6, 14, 36, 0.09);
+  border-radius: 14px;
   box-shadow: 0 4px 20px rgba(6, 14, 36, 0.03);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.3s ease;
+              border-color 0.28s ease;
   position: relative;
+  cursor: pointer;
 }
 
-.ind-capability-card:hover {
+.service-card * {
+  cursor: pointer;
+}
+
+.service-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(15, 34, 238, 0.25);
-  box-shadow: 0 20px 48px -10px rgba(6, 14, 36, 0.10), 0 4px 16px rgba(15, 34, 238, 0.05);
+  border-color: rgba(6, 14, 36, 0.25);
+  box-shadow: 0 20px 48px -10px rgba(6, 14, 36, 0.12), 0 4px 16px rgba(6, 14, 36, 0.04);
 }
 
-.ind-cap-top {
-  margin-bottom: 22px;
+.service-card:hover .service-card-title {
+  color: #000000;
 }
 
-.ind-cap-icon-box {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  background: #edf2ff;
-  border: 1px solid rgba(15, 34, 238, 0.14);
-  color: #0f22ee;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px rgba(15, 34, 238, 0.06);
-  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+.service-card-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #000000;
+  border-bottom: 1px solid rgba(6, 14, 36, 0.06);
 }
 
-.ind-capability-card:hover .ind-cap-icon-box {
-  background: #0f22ee;
-  color: #ffffff;
-  border-color: #0f22ee;
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(15, 34, 238, 0.3);
+.service-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.ind-cap-title {
-  font-size: clamp(18px, 1.35vw, 21px);
+.service-card:hover .service-card-img {
+  transform: scale(1.04);
+}
+
+.service-card-body {
+  padding: clamp(24px, 2.5vw, 32px);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.service-card-title {
+  font-size: clamp(20px, 1.4vw, 24px);
   font-weight: 700;
-  line-height: 1.34;
+  line-height: 1.28;
   letter-spacing: -0.025em;
   color: #060e24;
-  margin: 0 0 12px;
+  margin: 0 0 10px;
+  transition: color 0.2s ease;
 }
 
-.ind-cap-desc {
-  font-size: 14.8px;
-  line-height: 1.68;
-  color: #475569;
-  margin: 0;
+.service-card-desc {
+  font-size: 15px;
+  line-height: 1.62;
+  color: #64748b;
+  margin: 0 0 22px;
+  flex: 1;
 }
 
-/* D. Spanyx Growth-Driven Solutions (Pure Black Section, Off-White Sharp Cards) */
+.service-card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #060e24;
+  margin-top: auto;
+  transition: color 0.2s ease;
+}
+
+.service-card-action svg {
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.service-card:hover .service-card-action svg {
+  transform: translate(3px, -3px);
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1160px) {
+  .services-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(36px, 4vw, 54px);
+    row-gap: clamp(44px, 5vw, 68px);
+  }
+
+  .services-grid > .service-card:last-child:nth-child(2n + 1) {
+    grid-column: 1 / -1;
+    max-width: 480px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 680px) {
+  .services-hero-section {
+    padding: 72px 0 36px;
+  }
+
+  .services-hero-title {
+    font-size: 34px;
+  }
+
+  .services-hero-subtitle {
+    font-size: 15px;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+    row-gap: 36px;
+  }
+
+  .services-grid > .service-card:last-child {
+    grid-column: auto;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .service-card-body {
+    padding: 22px 20px;
+  }
+}
+
+/* =========================================================================
+   INDUSTRY DETAIL PAGE ENHANCEMENTS (Clean, Premium, High Contrast)
+   ========================================================================= */
+
+/* Spanyx Growth-Driven Solutions (Pure Black Section, Off-White Sharp Cards) */
 .growth-solutions-section {
   padding: clamp(80px, 8.5vw, 130px) 0;
   background: #000000;
@@ -6555,163 +6673,10 @@ body.is-page-navigating .legal-page {
   transform: translateX(4px);
 }
 
-/* D. How We Build For This Industry */
-.ind-approach-section {
-  padding: clamp(72px, 8vw, 112px) 0;
-  background: #f8fafc;
-  border-top: 1px solid rgba(6, 14, 36, 0.06);
-  border-bottom: 1px solid rgba(6, 14, 36, 0.06);
-}
 
-.ind-approach-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(18px, 2vw, 28px);
-}
 
-.ind-approach-card {
-  background: #ffffff;
-  border: 1px solid rgba(6, 14, 36, 0.08);
-  border-radius: 20px;
-  padding: clamp(28px, 3vw, 36px) clamp(20px, 2.2vw, 28px);
-  box-shadow: 0 4px 18px rgba(6, 14, 36, 0.03);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.28s ease;
-}
 
-.ind-approach-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(15, 34, 238, 0.3);
-  box-shadow: 0 18px 44px rgba(6, 14, 36, 0.08);
-}
 
-.ind-step-badge {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: #060e24;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 22px;
-  transition: background 0.25s ease, transform 0.25s ease;
-}
-
-.ind-approach-card:hover .ind-step-badge {
-  background: #0f22ee;
-  transform: scale(1.06);
-}
-
-.ind-step-title {
-  font-size: clamp(18px, 1.3vw, 21px);
-  font-weight: 700;
-  line-height: 1.35;
-  letter-spacing: -0.02em;
-  color: #060e24;
-  margin: 0 0 12px;
-}
-
-.ind-step-desc {
-  font-size: 14.5px;
-  line-height: 1.62;
-  color: #475569;
-  margin: 0;
-}
-
-/* E. Bottom CTA Section */
-.ind-cta-section {
-  padding: clamp(64px, 7vw, 96px) 0 clamp(72px, 8vw, 112px);
-  background: #ffffff;
-}
-
-.ind-cta-box {
-  background: #060e24;
-  border-radius: 28px;
-  padding: clamp(48px, 5.5vw, 76px) clamp(28px, 4.5vw, 64px);
-  text-align: center;
-  color: #ffffff;
-  box-shadow: 0 20px 50px rgba(6, 14, 36, 0.16);
-  position: relative;
-  overflow: hidden;
-}
-
-.ind-cta-box::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-}
-
-.ind-cta-content {
-  max-width: 720px;
-  margin: 0 auto;
-}
-
-.ind-cta-title {
-  font-size: clamp(28px, 3.4vw, 44px);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.03em;
-  color: #ffffff;
-  margin: 0 0 16px;
-}
-
-.ind-cta-desc {
-  font-size: clamp(15px, 1.2vw, 17.5px);
-  line-height: 1.65;
-  color: rgba(255, 255, 255, 0.78);
-  margin: 0 auto clamp(28px, 3.5vw, 40px);
-}
-
-.ind-cta-action {
-  display: flex;
-  justify-content: center;
-}
-
-.ind-cta-btn {
-  height: 54px;
-  padding: 0 40px;
-  background: #ffffff;
-  color: #060e24;
-  border: none;
-  border-radius: 9999px;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
-  white-space: nowrap;
-}
-
-.ind-cta-btn svg {
-  transition: transform 0.2s ease;
-}
-
-.ind-cta-btn:hover {
-  background: #0f22ee;
-  color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 16px 36px rgba(15, 34, 238, 0.38);
-}
-
-.ind-cta-btn:hover svg {
-  transform: translateX(4px);
-}
 
 /* F. Industry FAQ Section */
 .ind-faq-section {
@@ -6721,8 +6686,31 @@ body.is-page-navigating .legal-page {
 }
 
 .ind-faq-container {
-  max-width: 860px;
+  max-width: 900px;
   margin: 0 auto;
+}
+
+.ind-faq-header {
+  margin-bottom: clamp(32px, 3.5vw, 44px);
+  text-align: left;
+}
+
+.ind-section-title {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Inter, Arial, sans-serif;
+  font-size: clamp(28px, 2.6vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #060e24;
+  margin: 0 0 10px;
+  line-height: 1.22;
+}
+
+.ind-section-subtitle {
+  font-size: clamp(15px, 1.05vw, 16.5px);
+  color: #475569;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 680px;
 }
 
 .ind-faq-list {
@@ -6734,19 +6722,24 @@ body.is-page-navigating .legal-page {
 .ind-faq-item {
   background: #ffffff;
   border: 1px solid rgba(6, 14, 36, 0.08);
-  border-radius: 18px;
+  border-radius: 16px;
   overflow: hidden;
-  transition: all 0.25s ease;
-  box-shadow: 0 2px 10px rgba(6, 14, 36, 0.02);
+  transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease,
+              box-shadow 0.35s ease,
+              transform 0.35s ease;
+  box-shadow: 0 1px 4px rgba(6, 14, 36, 0.02);
 }
 
 .ind-faq-item:hover {
-  border-color: rgba(15, 34, 238, 0.22);
+  border-color: rgba(6, 14, 36, 0.2);
+  box-shadow: 0 6px 20px rgba(6, 14, 36, 0.04);
 }
 
 .ind-faq-item.is-open {
-  border-color: rgba(15, 34, 238, 0.35);
-  box-shadow: 0 8px 24px rgba(6, 14, 36, 0.05);
+  background: #000000;
+  border-color: #000000;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
 }
 
 .ind-faq-button {
@@ -6755,7 +6748,7 @@ body.is-page-navigating .legal-page {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  padding: clamp(20px, 2.2vw, 26px) clamp(22px, 2.6vw, 32px);
+  padding: clamp(18px, 2vw, 22px) clamp(22px, 2.4vw, 28px);
   background: transparent;
   border: none;
   cursor: pointer;
@@ -6764,18 +6757,21 @@ body.is-page-navigating .legal-page {
 }
 
 .ind-faq-question {
-  font-size: clamp(16.5px, 1.25vw, 19px);
+  font-size: clamp(16px, 1.15vw, 17.5px);
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.42;
   letter-spacing: -0.015em;
   color: #060e24;
   margin: 0;
-  transition: color 0.2s ease;
+  transition: color 0.3s ease;
 }
 
-.ind-faq-item.is-open .ind-faq-question,
 .ind-faq-button:hover .ind-faq-question {
-  color: #0f22ee;
+  color: #000000;
+}
+
+.ind-faq-item.is-open .ind-faq-question {
+  color: #ffffff;
 }
 
 .ind-faq-icon {
@@ -6788,61 +6784,72 @@ body.is-page-navigating .legal-page {
   align-items: center;
   justify-content: center;
   color: #060e24;
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, color 0.2s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, color 0.3s ease;
+}
+
+.ind-faq-button:hover .ind-faq-icon {
+  background: #e2e8f0;
+  color: #000000;
 }
 
 .ind-faq-item.is-open .ind-faq-icon {
   transform: rotate(180deg);
-  background: #0f22ee;
-  color: #ffffff;
+  background: #ffffff;
+  color: #000000;
+}
+
+.ind-faq-item.is-open:hover .ind-faq-icon {
+  background: #ffffff;
+  color: #000000;
+}
+
+/* Butter-Smooth Hardware-Accelerated Accordion Animation */
+.ind-faq-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ind-faq-item.is-open .ind-faq-collapse {
+  grid-template-rows: 1fr;
+}
+
+.ind-faq-answer-inner {
+  overflow: hidden;
 }
 
 .ind-faq-answer {
-  padding: 0 clamp(22px, 2.6vw, 32px) clamp(20px, 2.2vw, 26px);
+  padding: 0 clamp(22px, 2.4vw, 28px) clamp(22px, 2.4vw, 26px);
   font-size: 15px;
-  line-height: 1.7;
+  line-height: 1.68;
   color: #475569;
-  border-top: 1px solid rgba(6, 14, 36, 0.04);
-  animation: indFaqFade 0.25s ease-out;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+}
+
+.ind-faq-item.is-open .ind-faq-answer {
+  opacity: 1;
+  transform: translateY(0);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .ind-faq-answer p {
   margin: 0;
-}
-
-@keyframes indFaqFade {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 /* Responsive Breakpoints for Industry Pages */
 @media (max-width: 1024px) {
-  .ind-capabilities-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
-  }
-
   .growth-solutions-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
-  }
-
-  .ind-approach-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 20px;
   }
 }
 
 @media (max-width: 680px) {
-  .ind-capabilities-section,
   .growth-solutions-section,
-  .ind-approach-section,
   .ind-faq-section {
     padding: 56px 0;
   }
@@ -6878,12 +6885,6 @@ body.is-page-navigating .legal-page {
     font-size: 14.5px;
   }
 
-  .ind-capabilities-grid,
-  .ind-approach-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
   /* Single-row horizontal scroll on mobile for Growth-Driven Solutions */
   .growth-solutions-grid {
     display: flex !important;
@@ -6910,33 +6911,6 @@ body.is-page-navigating .legal-page {
     scroll-snap-align: center;
     scroll-snap-stop: always;
     padding: 26px 20px !important;
-  }
-
-  .ind-capability-card,
-  .ind-approach-card {
-    padding: 24px 20px;
-    border-radius: 16px;
-  }
-
-  .ind-cta-box {
-    padding: 40px 22px;
-    border-radius: 20px;
-  }
-
-  .ind-cta-title {
-    font-size: 24px;
-  }
-
-  .ind-cta-desc {
-    font-size: 14.5px;
-    margin-bottom: 26px;
-  }
-
-  .ind-cta-btn {
-    width: 100%;
-    max-width: 320px;
-    height: 50px;
-    font-size: 14.5px;
   }
 
   .sdp-highlights-grid {
@@ -9826,3 +9800,242 @@ body.is-page-navigating .legal-page {
 
 
 
+
+/* =========================================================================
+   FINAL POLISH — UNIFIED PAGE HEADER GEOMETRY
+   Every page with a Back button now uses the exact geometry of the
+   /industries/[slug] header (.sdp-header): same inset, height, button size
+   and Contact Us capsule. Covers three header systems:
+     1. .sdp-header            (industry + service detail pages — reference)
+     2. .about-header-wrapper  (about, services, industries, blog, legal)
+     3. .careers-top-nav       (careers + career detail)
+   ========================================================================= */
+:root {
+  --spx-hdr-x: clamp(16px, 3vw, 40px);  /* horizontal inset of back / contact */
+  --spx-hdr-y: 16px;                     /* vertical padding around buttons    */
+  --spx-hdr-btn: 42px;                   /* back circle + contact capsule height */
+}
+
+/* ---- Containers -------------------------------------------------------- */
+.sdp-header-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--spx-hdr-y) var(--spx-hdr-x);
+}
+
+.careers-top-nav {
+  border-bottom: none;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.careers-top-nav-inner {
+  max-width: 1440px !important;
+  margin: 0 auto !important;
+  padding: var(--spx-hdr-y) var(--spx-hdr-x) !important;
+}
+
+.about-header-wrapper {
+  height: calc(var(--spx-hdr-btn) + var(--spx-hdr-y) * 2) !important;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.about-header-wrapper .site-header {
+  position: relative !important;
+  height: 100% !important;
+  padding: 0 !important;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.about-header-wrapper .header-inner {
+  height: 100% !important;
+  padding: 0 !important;
+}
+
+.about-header-wrapper .header-brand-group {
+  position: absolute !important;
+  left: var(--spx-hdr-x) !important;
+  top: 50% !important;
+  transform: translateY(-50%);
+  height: var(--spx-hdr-btn);
+}
+
+.about-header-wrapper .header-actions {
+  position: absolute !important;
+  right: var(--spx-hdr-x) !important;
+  top: 50% !important;
+  transform: translateY(-50%);
+  height: var(--spx-hdr-btn);
+  gap: 0 !important;
+}
+
+/* ---- Back button (circle) --------------------------------------------- */
+.sdp-circle-back-btn,
+.about-header-wrapper .header-back-link,
+.careers-back-btn {
+  width: var(--spx-hdr-btn) !important;
+  height: var(--spx-hdr-btn) !important;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #060e24;
+  border: 1px solid rgba(6, 14, 36, 0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin: 0;
+  flex-shrink: 0;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sdp-circle-back-btn svg,
+.about-header-wrapper .header-back-link svg,
+.careers-back-btn svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.sdp-circle-back-btn:hover,
+.about-header-wrapper .header-back-link:hover,
+.careers-back-btn:hover {
+  background: #060e24;
+  color: #ffffff;
+  border-color: #060e24;
+  transform: scale(1.08) translateY(-1px);
+  box-shadow: 0 6px 16px rgba(6, 14, 36, 0.15);
+}
+
+/* ---- Contact Us (capsule) --------------------------------------------- */
+.sdp-nav-contact-btn,
+.about-header-wrapper .btn-contact-nav,
+.careers-nav-contact-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  height: var(--spx-hdr-btn) !important;
+  padding: 0 20px !important;
+  gap: 10px !important;
+  border: 0;
+  border-radius: 9999px;
+  background: #060e24;
+  color: #ffffff;
+  font-family: var(--font);
+  font-size: 13.5px !important;
+  font-weight: 500;
+  letter-spacing: 0;
+  box-shadow: none;
+  white-space: nowrap;
+  transition: background 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.sdp-nav-contact-btn svg,
+.about-header-wrapper .btn-contact-nav svg,
+.careers-nav-contact-btn svg {
+  width: 15px !important;
+  height: 15px !important;
+}
+
+.sdp-nav-contact-btn:hover,
+.about-header-wrapper .btn-contact-nav:hover,
+.careers-nav-contact-btn:hover {
+  background: #1d5cff;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(29, 92, 255, 0.22);
+}
+
+/* ---- Mobile: identical to /industries/[slug] mobile header ------------ */
+@media (max-width: 768px) {
+  :root {
+    --spx-hdr-x: 18px;
+    --spx-hdr-y: 14px;
+    --spx-hdr-btn: 36px;
+  }
+
+  .about-header-wrapper .header-brand-group {
+    gap: 0 !important;
+  }
+
+  .sdp-nav-contact-btn,
+  .about-header-wrapper .btn-contact-nav,
+  .careers-nav-contact-btn {
+    padding: 0 16px !important;
+    font-size: 12.5px !important;
+    gap: 6px !important;
+  }
+}
+
+/* =========================================================================
+   FINAL POLISH — HOMEPAGE MOBILE HEADER FLUSH TO TOP
+   Logo + 3-line sidebar button sit at the top-most position.
+   ========================================================================= */
+@media (max-width: 767px) {
+  .site-header {
+    padding-top: env(safe-area-inset-top, 0px) !important;
+    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .site-header .header-inner {
+    height: auto !important;
+    min-height: 48px !important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Back-button pages keep the unified header geometry defined above */
+  .about-header-wrapper .site-header .header-inner {
+    height: 100% !important;
+    padding: 0 !important;
+  }
+
+  .hero-headline-wrap {
+    margin-top: clamp(24px, 4vh, 36px) !important;
+  }
+}
+
+/* =========================================================================
+   FINAL POLISH — CAPSULE BUTTONS SITE-WIDE
+   All action, CTA, and interactive buttons share the Contact Us capsule shape.
+   ========================================================================= */
+.btn-primary,
+.btn-secondary,
+.careers-apply-btn,
+.careers-details-btn,
+.career-submit-btn,
+.career-hero-apply-btn,
+.career-return-btn,
+.spx-mfm-cta-btn,
+.contact-service-chip,
+.showcase-cat-btn,
+.island-nav-wrap .cta,
+.contact-submit,
+.spx-contact-submit-btn,
+.showcase-all-link,
+.showcase-discover-btn,
+.showcase-see-all-card,
+.about-preview-cta-btn,
+.industries-simple-cta-btn,
+.industries-preview-all-btn,
+.sdp-btn-primary,
+.growth-solutions-cta-btn,
+.legal-bottom-btn,
+.spx-cookie-accept-pill,
+.spx-cookie-btn,
+.spx-impact-tab-btn,
+.ind-cta-btn {
+  border-radius: 9999px !important;
+}
+
+.btn-primary::before,
+.btn-secondary::before,
+.careers-apply-btn::before,
+.careers-details-btn::before,
+.career-submit-btn::before,
+.spx-mfm-cta-btn::before {
+  border-radius: inherit !important;
+}

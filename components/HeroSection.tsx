@@ -100,8 +100,8 @@ export default function HeroSection({ onOpenContact }: HeroSectionProps) {
           {/* Hero Heading */}
           <div className="hero-headline-wrap">
             <h1 className="hero-headline">
-              <span className="line-1">ENGINEERING THE NEXT GENERATION</span>
-              <span className="line-2">OF DIGITAL TECHNOLOGY</span>
+              <span className="line-1">CUSTOM SOFTWARE, WEB PLATFORMS</span>
+              <span className="line-2">&amp; ENTERPRISE AI SYSTEMS</span>
             </h1>
           </div>
 
@@ -117,9 +117,11 @@ export default function HeroSection({ onOpenContact }: HeroSectionProps) {
             {/* Left Info Block */}
             <div className="hero-card-content">
               <p className="hero-card-description">
-                We build reliable software, websites, and digital systems for
-                businesses and universities. Delivered on time with clean
-                engineering.
+                We engineer custom software, enterprise platforms, and AI-driven
+                automation for businesses and institutions. From architecture
+                and UI/UX design to production deployment and long-term support,
+                we manage the full development lifecycle to deliver dependable
+                digital products.
               </p>
 
               {/* Apple-style Glass Cards */}
